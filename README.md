@@ -12,6 +12,3 @@ Definition of done (ingang vereiste voor de sprint oplevering)
 - Github project is bijgewerkt voor de relevante user stories
 - Code staat in de branche met bijbehorende sprintnummer
 - Er is een stuk werkende code (via github.io) die in de laatste versie van Chrome goed draait
-
-Hallo
-
