@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+	<meta charset='UTF-8'>
+	<title>JouwReis laden...</title>
+	<link rel="stylesheet" type="text/css" href="css/animations.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+	<script src="js/countUp.js"></script>
+	<script src="js/load.js"></script>
+</head>
+
+<body>
+	<!-- Show loadscreen -->
+	<div class="loadscreen">
+		<!-- Show clouds -->
+		<div id="clouds">
+			<div class="cloud x1"></div>
+			<div class="cloud x2"></div>
+			<div class="cloud x3"></div>
+			<div class="cloud x4"></div>
+			<div class="cloud x5"></div>
+		</div>
+		<!-- Show text and plane -->
+		<h1 class="loadingText bigEntrance">JouwReis is <span id="counter"></span>% geladen...</h1>
+		<img id="loadingImage" class="loadingImage slideRight" src="images/airplane.png">
+	</div>
+
+	<!-- Page content here -->
+	<div class="content">
+		<h1 class="loadingText">Levelscherm hier</h1>
+	</div>
+</body>
+</html>
