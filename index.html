@@ -1,23 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Video</title>
-    <script src="./assets/js/video.js"></script>
+	<meta charset='UTF-8'>
+	<title>ikReis | Ontdek spelenderwijs landen en culturen</title>
+	<link rel="icon" href="assets/images/airplane.png" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="./assets/css/animations.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+	<script src="./assets/js/countUp.js"></script>
+	<script src="./assets/js/load.js"></script>
 </head>
 
 <body>
-    <canvas id=canvas></canvas>
-    
-    <video id=v controls loop>
-        <source src="./assets/video/Filmpje-Frankrijk.ogv" type="video/ogv">
-        <source src="./assets/video/Filmpje-Frankrijk.mp4" type="video/mp4">
-    </video>
+	<!-- Show loadscreen -->
+	<div class="loadscreen">
+		<!-- Show clouds -->
+		<div id="clouds">
+			<div class="cloud x1"></div>
+			<div class="cloud x2"></div>
+			<div class="cloud x3"></div>
+			<div class="cloud x4"></div>
+			<div class="cloud x5"></div>
+		</div>
+		<!-- Show text and plane -->
+		<h1 class="loadingText bigEntrance">JouwReis is <span id="counter"></span>% geladen...</h1>
+		<img id="loadingImage" class="loadingImage slideRight" src="./assets/images/airplane.png">
+	</div>
 
-    <link rel="stylesheet" href="./assets/css/style.css">
+	<!-- Page content here -->
+	<div class="content">
+		<canvas id="canvas"></canvas>
+		<!-- Video toevoegen aan html -->
+		<video id="video" controls src="./assets/video/Frankrijk.mp4" type="video/mp4"></video>
+	</div>
+
+	<script src="./build/app.js"></script>
 </body>
 
 </html>
