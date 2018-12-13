@@ -138,6 +138,10 @@ for (let country_name in countries) {
         country[0].addEventListener("mouseout", function() {
             country.animate(style, animation_speed);
         }, true);
+
+        country.node.onclick = function() {
+            console.log(country_name);
+        }
     })(countries[country_name]);
 }
 
