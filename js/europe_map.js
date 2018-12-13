@@ -2,6 +2,12 @@
 const map_width = 840.54822;
 const map_height = 731.3728;
 
+// animatie-eigenschappen
+const animation_speed = 250;
+const hover_style = {
+    fill: "#6597CF"
+};
+
 // initialiseer kaart
 const map_div = document.getElementById("europe_map");
 const map = new Raphael(map_div, map_width, map_height);
@@ -91,9 +97,8 @@ const ru_fed_areas = [
     map.path("M 6989.6109,3824.389 C 6967.6109,3794.389 6988.6109,3767.389 6982.6109,3757.389 C 6979.6109,3753.389 6975.6109,3750.389 6971.6109,3748.389 C 6969.6109,3747.389 6966.6109,3750.389 6965.6109,3749.389 C 6961.6109,3746.389 6963.6109,3738.389 6959.6109,3737.389 C 6945.6109,3733.389 6931.6109,3746.389 6916.6109,3746.389 C 6914.6109,3746.389 6917.6109,3743.389 6915.6109,3742.389 C 6902.6109,3738.389 6882.6109,3739.389 6870.6109,3732.389 C 6867.6109,3730.389 6867.6109,3725.389 6864.6109,3724.389 C 6861.6109,3724.389 6860.6109,3728.389 6857.6109,3729.389 C 6858.6109,3732.389 6858.6109,3734.389 6857.6109,3736.389 C 6856.6109,3738.389 6851.6109,3735.389 6851.6109,3737.389 C 6850.6109,3748.389 6864.6109,3758.389 6861.6109,3769.389 C 6858.6109,3782.389 6805.6109,3781.389 6807.6109,3775.389 C 6808.6109,3773.389 6809.6109,3771.389 6810.6109,3769.389 C 6799.6109,3781.389 6787.6109,3779.389 6771.6109,3783.389 C 6769.6109,3783.389 6766.6109,3782.389 6766.6109,3784.389 C 6765.6109,3792.389 6769.6109,3800.389 6769.6109,3808.389 C 6769.6109,3822.389 6762.6109,3837.389 6750.6109,3849.389 C 6807.6109,3857.389 6942.6109,3852.389 6988.6109,3825.389 C 6988.6109,3825.389 6988.6109,3825.389 6989.6109,3824.389 z M 6834.6109,3728.389 C 6834.6109,3728.389 6833.6109,3728.389 6833.6109,3728.389 C 6832.6109,3731.389 6830.6109,3735.389 6829.6109,3738.389 C 6831.6109,3735.389 6833.6109,3731.389 6834.6109,3728.389 z "),
 ];
 
-let russian_federation = map.group("europe_map", ru_fed_areas);
-
-russian_federation.translate("0.1320712,0,0,0.1320712,-494.4106,-115.061358");
+let russian_federation = map.group("europe_map", ru_fed_areas)
+    .translate("0.1320712,0,0,0.1320712,-494.4106,-115.061358");
 
 // water
 const water = {};
@@ -122,10 +127,21 @@ outside_europe["tunisia"] = map.path("M 564.89568,790.37084 C 568.72575,789.7105
 
 // Render landen op scherm
 for (let country_name in countries) {
-    countries[country_name].attr(style);
-    countries[country_name].transform("t-283.68719,-87.199905");
+    (function(country) {
+        country.attr(style);
+        country.transform("t-283.68719,-87.199905");
+
+        country[0].addEventListener("mouseover", function() {
+            country.animate(hover_style, animation_speed);
+        }, true);
+
+        country[0].addEventListener("mouseout", function() {
+            country.animate(style, animation_speed);
+        }, true);
+    })(countries[country_name]);
 }
 
+// Russische Federatie
 for (let i = 0; i < ru_fed_areas.length; i++) {
     ru_fed_areas[i].attr(style);
 }
