@@ -7,7 +7,7 @@ class keyHandler {
     // Adds event listeners on keys
     public runKeyHandler() {
         window.addEventListener("keydown", (event) => this.keyPressHandler(event));
-
+        this.keyPressed = null;
     }
 
     // Checks on key pressed
@@ -24,6 +24,12 @@ class keyHandler {
         }
         if (event.key == 'd') {
             this.keyPressed = 'D';
+        }
+        if (event.key == 'v') {
+            this.keyPressed = 'V';
+        }
+        if (event.key == 'c') {
+            this.keyPressed = 'C';
         }
     }
 
