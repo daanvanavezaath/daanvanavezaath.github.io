@@ -6,6 +6,12 @@
     font-style: normal;
 }
 
+#headerContainer { 
+	font-family: 'Walkway';
+	color: #FFF;
+	letter-spacing: 2px;
+}
+
 .no-js #loader {
 	display: none;
 }

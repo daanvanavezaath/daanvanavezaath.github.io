@@ -42,37 +42,42 @@ class Canvas {
         this.ctx.font = `${fontSize}px Walkway`;
         this.ctx.fillText(text, aXpos, aYpos, maxWidth);
     }
+    hideVideo() {
+        var videlem = document.getElementById("video");
+        videlem.style.display = "none";
+    }
+    writeCloseButtonToCanvas() {
+        this.writeTextToCanvas("Druk op 'C' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
+    }
 }
 class Game {
     constructor() {
+        this.urlFR = "./assets/video/Frankrijk.mp4";
         const canvasElement = document.getElementById('canvas');
         this.canvas = new Canvas(canvasElement);
         this.keyHandler = new keyHandler;
         this.questionHandler = new questionHandler;
         this.country = 'Frankrijk';
         this.questionHandler.questionCounter = 0;
-        this.goodAnswer = null;
+        this.answerpadding = 300;
         this.levelScreen();
         this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
     }
     drawSouvenirs() {
         if (this.questionHandler.question0 != true) {
-            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir1_tr.png`, 50, 150, 150, 150, "QuesOneTransparent");
+            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir1_tr.png`, 130, 150, 150, 150, "QuesOneTransparent");
         }
         else {
-            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir1_h.png`, 50, 150, 150, 150, "QuesOne");
+            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir1_h.png`, 130, 150, 150, 150, "QuesOne");
         }
         if (this.questionHandler.question1 != true) {
-            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir2_tr.png`, 250, 150, 150, 150, "QuesTwoTransparent");
+            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir2_tr.png`, 330, 150, 150, 150, "QuesTwoTransparent");
         }
         else {
-            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir2_h.png`, 250, 150, 150, 150, "QuesTwo");
+            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir2_h.png`, 330, 150, 150, 150, "QuesTwo");
         }
         if (this.questionHandler.question2 != true) {
-            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir3_tr.png`, 450, 150, 150, 150, "QuesThreeTransparent");
-        }
-        else {
-            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir3_h.png`, 450, 150, 150, 150, "QuesThree");
+            this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir3_tr.png`, 530, 150, 150, 150, "QuesThreeTransparent");
         }
     }
     gameScreen() {
@@ -86,20 +91,52 @@ class Game {
         this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/char.png`, 50, this.canvas.getHeight() - 250, 350, 350, "Character");
     }
     showQuestion() {
-        let value = this.questionHandler.questions[this.questionHandler.questionCounter];
-        this.canvas.writeTextToCanvas(value.question, 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
-        this.goodAnswer = value.answer;
+        let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
+        this.canvas.writeTextToCanvas(questionObject.question, 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+        this.goodAnswer = questionObject.answer;
+        this.canvas.writeTextToCanvas("TIP! Druk op 'V' voor een informatievideo!", 30, this.canvas.getWidth() - 400, 520, '#FFF', 'center');
+    }
+    showAnswers() {
+        let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
+        let answerArray = questionObject.potentials;
+        for (let index = 0; index < answerArray.length; index++) {
+            const answerElement = answerArray[index];
+            this.canvas.writeTextToCanvas(answerElement, 30, this.canvas.getWidth() - 400, this.answerpadding, '#FFF', 'center');
+            this.answerpadding += 50;
+        }
     }
     checkAnswer() {
+        if (this.keyHandler.keyPressed == 'V') {
+            this.videoScreen();
+        }
+        if (this.keyHandler.keyPressed == 'C') {
+            this.canvas.hideVideo();
+            this.canvas.Clear();
+            this.levelScreen();
+        }
         if (this.goodAnswer == this.keyHandler.keyPressed) {
             this.keyHandler.resetKeys();
             this.canvas.Clear();
+            this.answerpadding = 300;
             this.questionHandler.setQuestionBooleans();
             this.questionHandler.increaseQuestionCounter();
             this.levelScreen();
         }
-        if (this.goodAnswer !== this.keyHandler.keyPressed) {
-            this.keyHandler.resetKeys();
+        if (this.keyHandler.keyPressed !== null) {
+            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'C') {
+                clearInterval(this.answerInterval);
+                this.canvas.Clear();
+                this.gameScreen();
+                this.writeLevelAssets();
+                this.drawSouvenirs();
+                this.answerpadding = 300;
+                this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                setTimeout(() => {
+                    this.keyHandler.resetKeys();
+                    this.levelScreen();
+                    this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
+                }, 3000);
+            }
         }
         if (this.questionHandler.questionCounter > 2) {
             clearInterval(this.answerInterval);
@@ -117,12 +154,31 @@ class Game {
         this.drawSouvenirs();
         this.showQuestion();
         this.keyHandler.runKeyHandler();
+        this.showAnswers();
     }
     playedOutScreen() {
         this.canvas.Clear();
         this.gameScreen();
         this.writeLevelAssets();
+        this.drawSouvenirs();
+        this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir3_h.png`, 530, 150, 150, 150, "QuesThree");
         this.canvas.writeTextToCanvas('Goed gedaan! Level uitgespeeld!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+    }
+    showVideo() {
+        var videlem = document.getElementById("video");
+        videlem.style.display = "initial";
+    }
+    videoScreen() {
+        this.canvas.Clear();
+        this.canvas.writeTextToCanvas('Bekijk de video voor meer informatie!', 70, this.canvas.getWidth() / 2, 100, '#FFF', 'center');
+        var videlem = document.getElementById("video");
+        var sourceMP4 = document.createElement("source");
+        sourceMP4.type = "video/mp4";
+        sourceMP4.src = this.urlFR;
+        videlem.appendChild(sourceMP4);
+        videlem.id = "video";
+        this.showVideo();
+        this.canvas.writeCloseButtonToCanvas();
     }
 }
 window.addEventListener('load', init);
@@ -134,6 +190,7 @@ class keyHandler {
     }
     runKeyHandler() {
         window.addEventListener("keydown", (event) => this.keyPressHandler(event));
+        this.keyPressed = null;
     }
     keyPressHandler(event) {
         if (event.key == 'a') {
@@ -149,6 +206,12 @@ class keyHandler {
         if (event.key == 'd') {
             this.keyPressed = 'D';
         }
+        if (event.key == 'v') {
+            this.keyPressed = 'V';
+        }
+        if (event.key == 'c') {
+            this.keyPressed = 'C';
+        }
     }
     resetKeys() {
         this.keyPressed = null;
@@ -163,17 +226,20 @@ class questionHandler {
         this.questions = [{
                 number: 0,
                 question: 'Hoe schrijf je Nederland in het Frans?',
-                answer: 'A'
+                answer: 'C',
+                potentials: ['A: Hollandia', "B: l'Hollande", 'C: Les Pays-Bas', 'D: Les Nederlands']
             },
             {
                 number: 1,
                 question: 'Wat is de bekendste kaas van Frankrijk?',
-                answer: 'D'
+                answer: 'D',
+                potentials: ['A: Brie', "B: Beaufort", 'C: Roquefort', 'D: Camembert']
             },
             {
                 number: 2,
                 question: 'Wie was de bekendste Franse persoon?',
-                answer: 'B'
+                answer: 'A',
+                potentials: ['A: Napoleon', "B: Georges Pompidou", "Jeanne D'Arc", 'Lodewijk XIV']
             }
         ];
     }

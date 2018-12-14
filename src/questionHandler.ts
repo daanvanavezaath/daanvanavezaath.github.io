@@ -14,17 +14,20 @@ class questionHandler {
         this.questions = [{
             number: 0,
             question: 'Hoe schrijf je Nederland in het Frans?',
-            answer: 'A'
+            answer: 'C',
+            potentials: ['A: Hollandia', "B: l'Hollande", 'C: Les Pays-Bas', 'D: Les Nederlands']
         },
         {
             number: 1,
             question: 'Wat is de bekendste kaas van Frankrijk?',
-            answer: 'D'
+            answer: 'D',
+            potentials: ['A: Brie', "B: Beaufort", 'C: Roquefort', 'D: Camembert']
         },
         {
             number: 2,
             question: 'Wie was de bekendste Franse persoon?',
-            answer: 'B'
+            answer: 'A',
+            potentials: ['A: Napoleon', "B: Georges Pompidou", "Jeanne D'Arc", 'Lodewijk XIV']
         }
         ];
     }

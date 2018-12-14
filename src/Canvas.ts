@@ -89,11 +89,22 @@ class Canvas {
         this.ctx.font = `${fontSize}px Walkway`;
         this.ctx.fillText(`ikReis | ${text}`, aXpos, aYpos, maxWidth);
     }
+    
 
     // Writes country into the rectangle 
     public writeCountryToRectangle(text: string, aXpos: number, aYpos: number, maxWidth: number, fontSize: number) {
         this.ctx.fillStyle = '#FFF';
         this.ctx.font = `${fontSize}px Walkway`;
         this.ctx.fillText(text, aXpos, aYpos, maxWidth);
+    }
+
+    public hideVideo() {
+        var videlem = document.getElementById("video")
+        videlem.style.display = "none";
+    }
+
+
+    public writeCloseButtonToCanvas() {
+        this.writeTextToCanvas("Druk op 'C' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
     }
 }
