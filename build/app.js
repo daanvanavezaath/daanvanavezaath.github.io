@@ -35,7 +35,7 @@ class Canvas {
     writeNameToRectangle(text, aXpos, aYpos, maxWidth, fontSize) {
         this.ctx.fillStyle = '#FFF';
         this.ctx.font = `${fontSize}px Walkway`;
-        this.ctx.fillText(`ikReis | ${text}`, aXpos, aYpos, maxWidth);
+        this.ctx.fillText(`ikReis`, aXpos, aYpos, maxWidth);
     }
     writeCountryToRectangle(text, aXpos, aYpos, maxWidth, fontSize) {
         this.ctx.fillStyle = '#FFF';
@@ -47,7 +47,7 @@ class Canvas {
         videlem.style.display = "none";
     }
     writeCloseButtonToCanvas() {
-        this.writeTextToCanvas("Druk op 'C' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
+        this.writeTextToCanvas("Druk op 'R' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
     }
 }
 class Game {
@@ -83,6 +83,7 @@ class Game {
     gameScreen() {
         this.canvas.drawRectangleToCanvas("#6597cf", 0, 0, this.canvas.getWidth(), 100);
         this.canvas.drawRectangleToCanvas("#6597cf", this.canvas.getWidth() - 700, 150, 600, 400);
+        this.canvas.writeNameToRectangle('', 50, 60, this.canvas.getWidth(), 30);
         this.canvas.writeCountryToRectangle(`Je bent in ${this.country}`, this.canvas.getWidth() - 250, 60, this.canvas.getWidth(), 30);
     }
     writeLevelAssets() {
@@ -105,25 +106,27 @@ class Game {
             this.answerpadding += 50;
         }
     }
+    resetLevel() {
+        this.answerpadding = 300;
+        this.canvas.Clear();
+        this.levelScreen();
+    }
     checkAnswer() {
         if (this.keyHandler.keyPressed == 'V') {
             this.videoScreen();
         }
-        if (this.keyHandler.keyPressed == 'C') {
+        if (this.keyHandler.keyPressed == 'R') {
             this.canvas.hideVideo();
-            this.canvas.Clear();
-            this.levelScreen();
+            this.resetLevel();
         }
         if (this.goodAnswer == this.keyHandler.keyPressed) {
             this.keyHandler.resetKeys();
-            this.canvas.Clear();
-            this.answerpadding = 300;
+            this.resetLevel();
             this.questionHandler.setQuestionBooleans();
             this.questionHandler.increaseQuestionCounter();
-            this.levelScreen();
         }
         if (this.keyHandler.keyPressed !== null) {
-            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'C') {
+            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'R') {
                 clearInterval(this.answerInterval);
                 this.canvas.Clear();
                 this.gameScreen();
@@ -209,8 +212,8 @@ class keyHandler {
         if (event.key == 'v') {
             this.keyPressed = 'V';
         }
-        if (event.key == 'c') {
-            this.keyPressed = 'C';
+        if (event.key == 'r') {
+            this.keyPressed = 'R';
         }
     }
     resetKeys() {
@@ -239,7 +242,7 @@ class questionHandler {
                 number: 2,
                 question: 'Wie was de bekendste Franse persoon?',
                 answer: 'A',
-                potentials: ['A: Napoleon', "B: Georges Pompidou", "Jeanne D'Arc", 'Lodewijk XIV']
+                potentials: ['A: Napoleon', "B: Georges Pompidou", "C: Jeanne D'Arc", 'D: Lodewijk XIV']
             }
         ];
     }

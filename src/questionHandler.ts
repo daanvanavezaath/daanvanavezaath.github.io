@@ -27,7 +27,7 @@ class questionHandler {
             number: 2,
             question: 'Wie was de bekendste Franse persoon?',
             answer: 'A',
-            potentials: ['A: Napoleon', "B: Georges Pompidou", "Jeanne D'Arc", 'Lodewijk XIV']
+            potentials: ['A: Napoleon', "B: Georges Pompidou", "C: Jeanne D'Arc", 'D: Lodewijk XIV']
         }
         ];
     }

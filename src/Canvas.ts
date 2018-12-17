@@ -87,7 +87,7 @@ class Canvas {
     public writeNameToRectangle(text: string, aXpos: number, aYpos: number, maxWidth: number, fontSize: number) {
         this.ctx.fillStyle = '#FFF';
         this.ctx.font = `${fontSize}px Walkway`;
-        this.ctx.fillText(`ikReis | ${text}`, aXpos, aYpos, maxWidth);
+        this.ctx.fillText(`ikReis`, aXpos, aYpos, maxWidth);
     }
     
 
@@ -105,6 +105,6 @@ class Canvas {
 
 
     public writeCloseButtonToCanvas() {
-        this.writeTextToCanvas("Druk op 'C' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
+        this.writeTextToCanvas("Druk op 'R' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
     }
 }
