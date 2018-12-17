@@ -2,8 +2,8 @@ class Game {
 
     private readonly canvas: Canvas;
     private readonly keyHandler: keyHandler;
-    private readonly country: string;
     private readonly questionHandler: questionHandler;
+    private readonly country: string;
     private goodAnswer: string;
     private answerInterval: any;
     private answerpadding: number;
@@ -48,7 +48,7 @@ class Game {
         // Writes top bar with name in it to the canvas  
         this.canvas.drawRectangleToCanvas("#6597cf", 0, 0, this.canvas.getWidth(), 100);
         this.canvas.drawRectangleToCanvas("#6597cf", this.canvas.getWidth() - 700, 150, 600, 400);
-        //this.canvas.writeNameToRectangle(this.askForName(), 50, 60, this.canvas.getWidth(), 30);
+        this.canvas.writeNameToRectangle('', 50, 60, this.canvas.getWidth(), 30);
         this.canvas.writeCountryToRectangle(`Je bent in ${this.country}`, this.canvas.getWidth() - 250, 60, this.canvas.getWidth(), 30);
     }
 
@@ -86,38 +86,46 @@ class Game {
         }
     }
 
+    private resetLevel() {
+        // Sets answer padding back to 300
+        this.answerpadding = 300;
+        // Clears the canvas
+        this.canvas.Clear();
+        // Renders the level screen
+        this.levelScreen();
+    }
+
     private checkAnswer() {
         // If 'V' is pressed, enter Video screen
         if (this.keyHandler.keyPressed == 'V') {
+            // Render video screen
             this.videoScreen();
         }
 
         // If 'C' is pressed, close Video screen and enter Level screen
-        if (this.keyHandler.keyPressed == 'C') {
+        if (this.keyHandler.keyPressed == 'R') {
+            // Hides video
             this.canvas.hideVideo();
-            this.canvas.Clear();
-            this.levelScreen();
+            // Resets level screen
+            this.resetLevel();
         }
 
         // Run if answer is the same as pushed button 
         if (this.goodAnswer == this.keyHandler.keyPressed) {
             // Resets the last pressed key
             this.keyHandler.resetKeys();
-            // Clears the canvas
-            this.canvas.Clear();
-            this.answerpadding = 300;
-            // Sets the question booleans
+            // Resets the level screen
+            this.resetLevel();
+            // Resets the question booleans
             this.questionHandler.setQuestionBooleans();
             // Increases the question counter by 1
             this.questionHandler.increaseQuestionCounter();
-            // Renders the level screen
-            this.levelScreen();
         }
 
 
         if (this.keyHandler.keyPressed !== null) {
             // If answers is not good, or keypress is not an answers letter, do this
-            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'C') {
+            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'R') {
                 // Stop interval to prevent infinite loop
                 clearInterval(this.answerInterval);
                 // Clears the canvas
