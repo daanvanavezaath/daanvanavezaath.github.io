@@ -28,8 +28,8 @@ class keyHandler {
         if (event.key == 'v') {
             this.keyPressed = 'V';
         }
-        if (event.key == 'c') {
-            this.keyPressed = 'C';
+        if (event.key == 'r') {
+            this.keyPressed = 'R';
         }
     }
 

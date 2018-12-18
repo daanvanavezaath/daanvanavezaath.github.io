@@ -23,6 +23,15 @@ class Game {
         this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
     }
 
+    private resetLevel() {
+        // Sets answer padding back to 300
+        this.answerpadding = 300;
+        // Clears the canvas
+        this.canvas.Clear();
+        // Renders the level screen
+        this.levelScreen();
+    }
+
     // Draws the earned souvenirs
     private drawSouvenirs() {
         if (this.questionHandler.question0 != true) {
@@ -93,10 +102,9 @@ class Game {
         }
 
         // If 'C' is pressed, close Video screen and enter Level screen
-        if (this.keyHandler.keyPressed == 'C') {
+        if (this.keyHandler.keyPressed == 'R') {
             this.canvas.hideVideo();
-            this.canvas.Clear();
-            this.levelScreen();
+            this.resetLevel();
         }
 
         // Run if answer is the same as pushed button 
@@ -117,7 +125,7 @@ class Game {
 
         if (this.keyHandler.keyPressed !== null) {
             // If answers is not good, or keypress is not an answers letter, do this
-            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'C') {
+            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'R') {
                 // Stop interval to prevent infinite loop
                 clearInterval(this.answerInterval);
                 // Clears the canvas
@@ -186,12 +194,6 @@ class Game {
         this.canvas.writeTextToCanvas('Goed gedaan! Level uitgespeeld!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
     }
 
-    // Function to show the video
-    public showVideo() {
-        var videlem = document.getElementById("video");
-        videlem.style.display = "initial";
-    }
-
     // Renders video screen
     public videoScreen() {
         // Clears the canvas
@@ -211,7 +213,7 @@ class Game {
         // Gives DOM element an ID
         videlem.id = "video";
         // Shows the video
-        this.showVideo();
+        this.canvas.show_video();
         // Shows close button
         this.canvas.writeCloseButtonToCanvas();
     }

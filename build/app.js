@@ -1,5 +1,6 @@
 class Canvas {
     constructor(canvas) {
+        this.video = document.getElementById("video");
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = window.innerWidth;
@@ -43,8 +44,10 @@ class Canvas {
         this.ctx.fillText(text, aXpos, aYpos, maxWidth);
     }
     hideVideo() {
-        var videlem = document.getElementById("video");
-        videlem.style.display = "none";
+        this.video.style.display = "none";
+    }
+    show_video() {
+        this.video.style.display = "inline";
     }
     writeCloseButtonToCanvas() {
         this.writeTextToCanvas("Druk op 'C' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
@@ -62,6 +65,11 @@ class Game {
         this.answerpadding = 300;
         this.levelScreen();
         this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
+    }
+    resetLevel() {
+        this.answerpadding = 300;
+        this.canvas.Clear();
+        this.levelScreen();
     }
     drawSouvenirs() {
         if (this.questionHandler.question0 != true) {
@@ -109,10 +117,9 @@ class Game {
         if (this.keyHandler.keyPressed == 'V') {
             this.videoScreen();
         }
-        if (this.keyHandler.keyPressed == 'C') {
+        if (this.keyHandler.keyPressed == 'R') {
             this.canvas.hideVideo();
-            this.canvas.Clear();
-            this.levelScreen();
+            this.resetLevel();
         }
         if (this.goodAnswer == this.keyHandler.keyPressed) {
             this.keyHandler.resetKeys();
@@ -123,7 +130,7 @@ class Game {
             this.levelScreen();
         }
         if (this.keyHandler.keyPressed !== null) {
-            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'C') {
+            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'R') {
                 clearInterval(this.answerInterval);
                 this.canvas.Clear();
                 this.gameScreen();
@@ -164,10 +171,6 @@ class Game {
         this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir3_h.png`, 530, 150, 150, 150, "QuesThree");
         this.canvas.writeTextToCanvas('Goed gedaan! Level uitgespeeld!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
     }
-    showVideo() {
-        var videlem = document.getElementById("video");
-        videlem.style.display = "initial";
-    }
     videoScreen() {
         this.canvas.Clear();
         this.canvas.writeTextToCanvas('Bekijk de video voor meer informatie!', 70, this.canvas.getWidth() / 2, 100, '#FFF', 'center');
@@ -177,7 +180,7 @@ class Game {
         sourceMP4.src = this.urlFR;
         videlem.appendChild(sourceMP4);
         videlem.id = "video";
-        this.showVideo();
+        this.canvas.show_video();
         this.canvas.writeCloseButtonToCanvas();
     }
 }
@@ -209,8 +212,8 @@ class keyHandler {
         if (event.key == 'v') {
             this.keyPressed = 'V';
         }
-        if (event.key == 'c') {
-            this.keyPressed = 'C';
+        if (event.key == 'r') {
+            this.keyPressed = 'R';
         }
     }
     resetKeys() {
@@ -239,7 +242,7 @@ class questionHandler {
                 number: 2,
                 question: 'Wie was de bekendste Franse persoon?',
                 answer: 'A',
-                potentials: ['A: Napoleon', "B: Georges Pompidou", "Jeanne D'Arc", 'Lodewijk XIV']
+                potentials: ['A: Napoleon', "B: Georges Pompidou", "C: Jeanne D'Arc", 'D: Lodewijk XIV']
             }
         ];
     }

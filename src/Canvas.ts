@@ -2,6 +2,7 @@ class Canvas {
 
     private readonly canvas: HTMLCanvasElement;
     private readonly ctx: CanvasRenderingContext2D;
+    private readonly video: any = document.getElementById("video");
 
     constructor(canvas:HTMLCanvasElement) {
         this.canvas = canvas;
@@ -99,10 +100,12 @@ class Canvas {
     }
 
     public hideVideo() {
-        var videlem = document.getElementById("video")
-        videlem.style.display = "none";
+        this.video.style.display = "none";
     }
 
+    public show_video() {
+        this.video.style.display = "inline";
+    }
 
     public writeCloseButtonToCanvas() {
         this.writeTextToCanvas("Druk op 'C' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
