@@ -3,18 +3,20 @@ class Game {
     private readonly canvas: Canvas;
     private readonly keyHandler: keyHandler;
     private readonly questionHandler: questionHandler;
-    private readonly country: string;
+    private countryController = new countryController;
+    private country: string;
     private goodAnswer: string;
     private answerInterval: any;
     private answerpadding: number;
-    private urlFR: string = "./assets/video/Frankrijk.mp4";
+    private urlFR: string = `./assets/video/${this.country}.mp4`;
 
     constructor() {
+        this.countryController = new countryController;
+        this.country = this.countryController.getCountry();
         const canvasElement: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvas');
         this.canvas = new Canvas(canvasElement);
         this.keyHandler = new keyHandler;
         this.questionHandler = new questionHandler;
-        this.country = 'Frankrijk';
         this.questionHandler.questionCounter = 0;
         this.answerpadding = 300;
         // Renders the level screen once
@@ -114,12 +116,12 @@ class Game {
         if (this.goodAnswer == this.keyHandler.keyPressed) {
             // Resets the last pressed key
             this.keyHandler.resetKeys();
-            // Resets the level screen
-            this.resetLevel();
             // Resets the question booleans
             this.questionHandler.setQuestionBooleans();
             // Increases the question counter by 1
             this.questionHandler.increaseQuestionCounter();
+            // Resets the level screen
+            this.resetLevel();
         }
 
 

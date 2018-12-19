@@ -199,7 +199,7 @@ for (let country_name in countries) {
 
         country.node.onclick = function() {
             console.log('Geklikt op een land')
-            window.location.replace("game.html");
+            window.location.replace("game.html?country=Frankrijk");
             passed = 1;
             console.log(countries[country_name]);
         }

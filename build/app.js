@@ -52,12 +52,14 @@ class Canvas {
 }
 class Game {
     constructor() {
-        this.urlFR = "./assets/video/Frankrijk.mp4";
+        this.countryController = new countryController;
+        this.urlFR = `./assets/video/${this.country}.mp4`;
+        this.countryController = new countryController;
+        this.country = this.countryController.getCountry();
         const canvasElement = document.getElementById('canvas');
         this.canvas = new Canvas(canvasElement);
         this.keyHandler = new keyHandler;
         this.questionHandler = new questionHandler;
-        this.country = 'Frankrijk';
         this.questionHandler.questionCounter = 0;
         this.answerpadding = 300;
         this.levelScreen();
@@ -121,9 +123,9 @@ class Game {
         }
         if (this.goodAnswer == this.keyHandler.keyPressed) {
             this.keyHandler.resetKeys();
-            this.resetLevel();
             this.questionHandler.setQuestionBooleans();
             this.questionHandler.increaseQuestionCounter();
+            this.resetLevel();
         }
         if (this.keyHandler.keyPressed !== null) {
             if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'R') {
@@ -187,6 +189,24 @@ class Game {
 window.addEventListener('load', init);
 function init() {
     setTimeout(function () { const ikReis = new Game(); }, 1000);
+}
+class countryController {
+    constructor() {
+    }
+    getCountry() {
+        let url = new URL(window.location.href);
+        let params = new URLSearchParams(url.search.slice(1));
+        for (let p of params) {
+            this.country = p[1];
+        }
+        if (this.country == null) {
+            alert('Oeps! Foutje... Wacht even, je wordt doorgestuurd.');
+            setTimeout(() => {
+                window.location.replace('index.html');
+            }, 50);
+        }
+        return this.country;
+    }
 }
 class keyHandler {
     constructor() {
