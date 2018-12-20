@@ -27,7 +27,7 @@ class questionHandler {
             number: 2,
             question: 'Wie was de bekendste Franse persoon?',
             answer: 'A',
-            potentials: ['A: Napoleon', "B: Georges Pompidou", "Jeanne D'Arc", 'Lodewijk XIV']
+            potentials: ['A: Napoleon', "B: Georges Pompidou", "C: Jeanne D'Arc", 'D: Lodewijk XIV']
         }
         ];
     }
@@ -43,13 +43,16 @@ class questionHandler {
     }
 
     // Sets the question booleans
-    public setQuestionBooleans() {
-        if(this.questionCounter >= 1) {
+
+   public setQuestionBooleans() {
+        if(this.questionCounter > 0) {
             this.question0 = true;
         }
-
-        if(this.questionCounter >= 2 ) {
+        if(this.questionCounter > 1) {
             this.question1 = true;
+        }
+        if(this.questionCounter > 2) {
+            this.question2 = true;
         }
     }
 }
