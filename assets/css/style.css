@@ -12,6 +12,14 @@
 	letter-spacing: 2px;
 }
 
+#europe_map {
+	background-color: #6597cf !important;
+}
+
+.democlass {
+	background-color: red;
+}
+
 .no-js #loader {
 	display: none;
 }
@@ -79,7 +87,6 @@ body {
 	-webkit-animation: moveclouds 15s linear infinite;
 	-moz-animation: moveclouds 15s linear infinite;
 	-o-animation: moveclouds 15s linear infinite;
-	animation: moveclouds 15s linear infinite;
 }
 
 /*variable speed, opacity, and position of clouds for realistic effect*/
@@ -96,7 +103,6 @@ body {
 	-webkit-animation: moveclouds 25s linear infinite;
 	-moz-animation: moveclouds 25s linear infinite;
 	-o-animation: moveclouds 25s linear infinite;
-	animation: moveclouds 25s linear infinite;
 }
 
 .x3 {
@@ -110,7 +116,6 @@ body {
 	-webkit-animation: moveclouds 20s linear infinite;
 	-moz-animation: moveclouds 20s linear infinite;
 	-o-animation: moveclouds 20s linear infinite;
-	animation: moveclouds 20s linear infinite;
 }
 
 .x4 {
@@ -124,7 +129,6 @@ body {
 	-webkit-animation: moveclouds 18s linear infinite;
 	-moz-animation: moveclouds 18s linear infinite;
 	-o-animation: moveclouds 18s linear infinite;
-	animation: moveclouds 18s linear infinite;
 }
 
 .x5 {
@@ -138,7 +142,6 @@ body {
 	-webkit-animation: moveclouds 20s linear infinite;
 	-moz-animation: moveclouds 20s linear infinite;
 	-o-animation: moveclouds 20s linear infinite;
-	animation: moveclouds 20s linear infinite;
 }
 
 @-webkit-keyframes moveclouds {
@@ -150,10 +153,6 @@ body {
 	100% {margin-left: -1000px;}
 }
 @-o-keyframes moveclouds {
-	0% {margin-left: 1000px;}
-	100% {margin-left: -1000px;}
-}
-@keyframes moveclouds {
 	0% {margin-left: 1000px;}
 	100% {margin-left: -1000px;}
 }
@@ -185,7 +184,19 @@ img {
 
 .Frankrijk {
 	background-image: url(../images/Frankrijk/bg.png);
+	background-size: 50%;
 }
+
+.Belgie {
+	background-image: url(../images/Belgie/bg.png);
+	background-size: 56%;
+}
+
+.Duitsland {
+	background-image: url(../images/Duitsland/bg.png);
+	background-size: 56%;
+}
+
 
 /* Styling van de video */
 #video {

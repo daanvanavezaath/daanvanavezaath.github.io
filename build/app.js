@@ -1,6 +1,5 @@
 class Canvas {
     constructor(canvas) {
-        this.video = document.getElementById("video");
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = window.innerWidth;
@@ -36,7 +35,7 @@ class Canvas {
     writeNameToRectangle(text, aXpos, aYpos, maxWidth, fontSize) {
         this.ctx.fillStyle = '#FFF';
         this.ctx.font = `${fontSize}px Walkway`;
-        this.ctx.fillText(`ikReis | ${text}`, aXpos, aYpos, maxWidth);
+        this.ctx.fillText(`ikReis`, aXpos, aYpos, maxWidth);
     }
     writeCountryToRectangle(text, aXpos, aYpos, maxWidth, fontSize) {
         this.ctx.fillStyle = '#FFF';
@@ -44,10 +43,8 @@ class Canvas {
         this.ctx.fillText(text, aXpos, aYpos, maxWidth);
     }
     hideVideo() {
-        this.video.style.display = "none";
-    }
-    show_video() {
-        this.video.style.display = "inline";
+        var videlem = document.getElementById("video");
+        videlem.style.display = "none";
     }
     writeCloseButtonToCanvas() {
         this.writeTextToCanvas("Druk op 'R' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
@@ -175,6 +172,34 @@ class EuropeMap {
         this.outside_europe["algeria"] = this.map.path("M 564.89568,790.37084 C 564.89568,790.635 564.76361,790.76706 564.89568,790.89914 C 564.89568,791.16327 565.15982,791.29534 565.2919,791.5595 C 565.6881,792.74814 562.51841,792.61606 561.99011,792.8802 C 560.80148,793.40849 564.49947,793.40849 562.38633,795.12542 C 561.1977,796.18197 559.61284,795.91785 558.55627,797.37062 C 558.02797,798.16305 560.6694,797.76683 561.1977,798.55926 C 561.32976,798.8234 559.61284,806.87975 559.61284,807.93631 C 559.34868,810.84189 561.06562,811.63432 560.80148,814.53987 C 560.6694,817.31337 559.34868,814.53987 559.87697,817.70958 C 560.00905,818.63409 562.12219,818.63409 561.99011,819.29443 L 415.12698,819.29443 C 415.12698,819.29443 415.12698,819.29443 415.12698,819.16237 C 414.99491,818.1058 413.01384,817.84166 413.01384,816.78507 C 412.88177,815.86058 414.59869,815.46438 414.73077,814.53987 C 414.73077,814.01158 409.31584,809.25702 408.91963,807.80425 L 407.99513,806.74768 C 407.86306,806.74768 407.731,806.61561 407.731,806.61561 C 409.31584,807.27595 409.44792,808.46461 412.35348,808.72875 C 413.80628,808.72875 422.3909,805.55904 423.05125,804.89868 C 424.90025,803.0497 424.37196,801.46483 427.01338,800.27619 C 430.1831,798.8234 432.16415,800.54034 432.56038,800.54034 C 435.06972,799.74791 434.6735,797.37062 436.91872,797.89891 C 440.22051,798.8234 433.88109,799.61583 440.22051,800.40826 C 442.72985,800.80448 443.12606,797.50269 444.31471,796.31406 C 445.63542,795.12542 456.46525,790.76706 458.05012,790.635 C 462.6726,790.23878 467.03095,790.76706 471.91757,790.76706 C 473.37037,790.76706 474.82314,789.97464 476.27594,790.1067 C 476.67214,790.1067 476.93628,790.635 477.3325,790.76706 C 477.99285,791.03121 478.78528,791.16327 479.44564,791.29534 C 481.69084,791.5595 483.2757,788.786 484.99262,788.12564 C 486.84162,787.20113 487.10576,790.635 488.82269,789.31429 C 489.2189,789.05015 488.95476,788.38978 489.35097,788.25772 C 489.6151,788.12564 489.74718,788.786 490.01132,788.91807 C 490.80375,789.18221 491.72826,789.44637 492.65275,789.31429 C 494.89795,789.31429 496.0866,787.33321 498.46389,787.33321 C 499.38839,787.20113 500.31288,787.99357 501.36945,788.12564 C 504.40708,788.38978 507.84093,787.86149 511.01064,788.52186 C 514.57656,789.31429 515.36899,793.80471 518.40663,793.67263 C 523.82154,793.40849 519.85941,793.14435 522.10463,791.5595 C 524.61397,789.84257 528.97233,791.95572 531.3496,789.44637 C 533.46274,787.20113 529.10439,787.33321 534.78345,786.80493 C 536.63245,786.67286 535.44381,788.25772 536.50038,788.91807 C 537.55695,789.31429 538.74559,789.05015 539.80216,789.31429 C 539.93422,789.31429 539.93422,789.57843 540.0663,789.57843 C 540.46252,789.97464 540.85872,790.50292 541.38701,790.50292 C 547.46229,791.16327 542.17944,789.84257 545.21709,787.20113 C 546.66986,786.0125 553.80171,791.16327 555.25448,791.5595 C 556.44311,791.82363 558.42419,789.7105 559.48076,789.97464 C 561.85804,790.635 563.57496,790.635 564.89568,790.37084 z ");
         this.outside_europe["tunisia"] = this.map.path("M 564.89568,790.37084 C 568.72575,789.7105 569.91438,786.27664 574.93309,785.35216 C 576.51794,785.08799 581.00836,781.9183 582.197,783.63522 C 582.72529,784.42766 581.00836,785.35216 581.27249,786.27664 C 581.80079,788.786 583.64979,786.0125 583.38565,785.74836 C 582.98943,785.35216 582.06492,786.14458 581.66871,785.74836 C 579.95179,783.50315 587.61191,785.35216 588.00813,786.27664 C 588.27227,786.80493 586.42328,786.27664 586.15913,786.80493 C 586.02707,787.33321 587.21571,787.06907 587.61191,787.33321 C 587.87605,787.72943 586.8195,787.86149 586.68742,788.25772 C 586.02707,789.57843 588.93264,791.03121 589.19677,791.42743 C 589.72507,792.21984 589.32885,793.67263 590.12128,794.20091 C 590.25333,794.33298 596.06446,788.91807 598.97003,787.86149 C 599.23418,787.86149 599.23418,788.25772 599.23418,788.38978 C 599.49832,789.44637 600.15867,790.50292 600.02661,791.5595 C 599.76246,792.48398 598.70589,792.8802 598.17761,793.54057 C 597.12104,794.86128 596.72484,797.50269 595.66826,798.42719 C 592.89476,801.06862 588.00813,800.6724 591.70612,807.1439 C 593.1589,809.7853 595.0079,809.3891 595.93241,810.18152 C 596.32862,810.44567 595.80033,811.37018 596.19655,811.63432 C 596.98896,812.29467 598.30969,812.03052 599.1021,812.69087 C 599.23418,812.95503 598.70589,817.18129 598.83797,817.57751 C 599.1021,818.36995 600.55489,818.63409 600.81904,819.29443 L 561.99011,819.29443 C 562.12219,818.63409 560.00905,818.63409 559.87697,817.70958 C 559.34868,814.53987 560.6694,817.31337 560.80148,814.53987 C 561.06562,811.63432 559.34868,810.84189 559.61284,807.93631 C 559.61284,806.87975 561.32976,798.8234 561.1977,798.55926 C 560.6694,797.76683 558.02797,798.16305 558.55627,797.37062 C 559.61284,795.91785 561.1977,796.18197 562.38633,795.12542 C 564.49947,793.40849 560.80148,793.40849 561.99011,792.8802 C 562.51841,792.61606 565.6881,792.74814 565.2919,791.5595 C 565.15982,791.29534 564.89568,791.16327 564.89568,790.89914 C 564.76361,790.76706 564.89568,790.635 564.89568,790.37084 z ");
     }
+    find(text) {
+        return text;
+    }
+    country_cookie(mode, country = null) {
+        let clicked_country_array = [];
+        let clicked_country_cookie;
+        if (mode === "dissect") {
+            if (document.cookie) {
+                const cookies = document.cookie;
+                let cookie_array = cookies.split(";");
+                const regex = /countries_clicked/;
+                let i = cookie_array.indexOf(regex);
+                let country_cookie_array = cookie_array[i].split("=");
+                let countries_clicked = JSON.parse(country_cookie_array[1]);
+                return countries_clicked;
+            }
+        }
+        else if (mode === "build") {
+            if (clicked_country_array.find(this.find(country)) === null) {
+                clicked_country_array.push(country);
+                clicked_country_cookie = JSON.stringify(clicked_country_array);
+                return document.cookie = `countries_clicked=${clicked_country_cookie}`;
+            }
+        }
+        else {
+            return console.log("Choose 'dissect' or 'build'");
+        }
+    }
     draw_map() {
         const default_style = {
             fill: "#CCC",
@@ -225,8 +250,8 @@ class EuropeMap {
                     }
                 }, true);
                 country.node.onclick = function () {
+                    country_name = window.btoa(country_name);
                     window.location.replace(`game.html?country=${country_name}`);
-                    console.log(country_name);
                 };
             })(this.european_countries[country_name]);
         }
@@ -406,11 +431,17 @@ class countryController {
         let url = new URL(window.location.href);
         let params = new URLSearchParams(url.search.slice(1));
         for (let p of params) {
-            this.country = p[1];
+            this.country = window.atob(p[1]);
         }
         switch (this.country) {
             case "france":
                 this.country = "Frankrijk";
+                break;
+            case "belgium":
+                this.country = "Belgie";
+                break;
+            case "germany":
+                this.country = "Duitsland";
                 break;
             default:
                 this.country = null;
@@ -462,26 +493,71 @@ class questionHandler {
         this.question0 = false;
         this.question1 = false;
         this.question2 = false;
+        this.countryController = new countryController;
         this.questionCounter = 0;
-        this.questions = [{
-                number: 0,
-                question: 'Hoe schrijf je Nederland in het Frans?',
-                answer: 'C',
-                potentials: ['A: Hollandia', "B: l'Hollande", 'C: Les Pays-Bas', 'D: Les Nederlands']
-            },
-            {
-                number: 1,
-                question: 'Wat is de bekendste kaas van Frankrijk?',
-                answer: 'D',
-                potentials: ['A: Brie', "B: Beaufort", 'C: Roquefort', 'D: Camembert']
-            },
-            {
-                number: 2,
-                question: 'Wie was de bekendste Franse persoon?',
-                answer: 'A',
-                potentials: ['A: Napoleon', "B: Georges Pompidou", "C: Jeanne D'Arc", 'D: Lodewijk XIV']
-            }
-        ];
+        if (this.countryController.getCountry() == 'Frankrijk') {
+            this.questions = [{
+                    number: 0,
+                    question: 'Hoe schrijf je Nederland in het Frans?',
+                    answer: 'C',
+                    potentials: ['A: Hollandia', "B: l'Hollande", 'C: Les Pays-Bas', 'D: Les Nederlands']
+                },
+                {
+                    number: 1,
+                    question: 'Wat is de bekendste kaas van Frankrijk?',
+                    answer: 'D',
+                    potentials: ['A: Brie', "B: Beaufort", 'C: Roquefort', 'D: Camembert']
+                },
+                {
+                    number: 2,
+                    question: 'Wie was de bekendste Franse persoon?',
+                    answer: 'A',
+                    potentials: ['A: Napoleon', "B: Georges Pompidou", "C: Jeanne D'Arc", 'D: Lodewijk XIV']
+                }
+            ];
+        }
+        if (this.countryController.getCountry() == 'Belgie') {
+            this.questions = [{
+                    number: 0,
+                    question: 'Sinds wanneer bestaat België?',
+                    answer: 'D',
+                    potentials: ['A: 1795', "B: 2000", 'C: 1908', 'D: 1830']
+                },
+                {
+                    number: 1,
+                    question: 'Hoelang heeft het Verenigd Koninkrijk der Nederlanden standgehouden?',
+                    answer: 'B',
+                    potentials: ['A: 8 Jaar', "B: 15 Jaar", 'C: 17.5 Jaar', 'D: 55 Jaar']
+                },
+                {
+                    number: 2,
+                    question: 'Wat betekend "Seffus"?',
+                    answer: 'C',
+                    potentials: ['A: Zeven', "B: Eventjes", "C: Straks", 'D: Gisteren']
+                }
+            ];
+        }
+        if (this.countryController.getCountry() == 'Duitsland') {
+            this.questions = [{
+                    number: 0,
+                    question: 'Wat betekend "Man" in het Duits?',
+                    answer: 'A',
+                    potentials: ['A: Mens', 'B: Man', 'C: Vader', 'D: Vrachtwagen']
+                },
+                {
+                    number: 1,
+                    question: 'Uit hoeveel vorstendommen bestond Duitsland vroeger?',
+                    answer: 'C',
+                    potentials: ['A: Precies 100', 'B: Ongeveer 40', 'C: Ongeveer 130', 'D: Precies 12']
+                },
+                {
+                    number: 2,
+                    question: 'Wat wordt er bedoeld met "Schlager"?',
+                    answer: 'B',
+                    potentials: ['A: Slaan', 'B: Muziek', "C: Slager", 'D: Vleesindustrie']
+                }
+            ];
+        }
     }
     increaseQuestionCounter() {
         this.questionCounter++;

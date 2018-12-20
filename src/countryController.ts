@@ -10,14 +10,20 @@ class countryController {
         let params = new URLSearchParams(url.search.slice(1));
         
         for (let p of params) {
-        this.country = p[1];
+            this.country = window.atob(p[1]);
         }
 
         switch (this.country) {
             case "france":
                 this.country = "Frankrijk";
                 break;
-        
+            case "belgium":
+                this.country = "Belgie";
+                break;
+            case "germany":
+                this.country = "Duitsland";
+                break;
+            // etc. etc. etc.
             default:
                 this.country = null;
                 break;
