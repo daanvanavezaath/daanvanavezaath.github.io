@@ -23,13 +23,15 @@ class countryController {
             case "germany":
                 this.country = "Duitsland";
                 break;
-            // etc. etc. etc.
+            case "netherlands":
+                this.country = "Nederland";
+                break;
             default:
                 this.country = null;
                 break;
         }
 
-        if(this.country == null) {
+        if(this.country == null && window.location.pathname.match(/\/game.html/)) {
             alert('Oeps! Foutje... Wacht even, je wordt doorgestuurd.')
             setTimeout(() => {
                 window.location.replace('index.html');

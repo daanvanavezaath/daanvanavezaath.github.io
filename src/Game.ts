@@ -10,6 +10,8 @@ class Game {
     private answerpadding: number;
     private urlFR: string = `./assets/video/${this.country}.mp4`;
 
+    private passed: string;
+
     constructor() {
         this.countryController = new countryController;
         this.country = this.countryController.getCountry();
@@ -151,10 +153,34 @@ class Game {
         }
 
         // If there are no questions, reset and move page to start page after 2 secs
+        // also add a cookie if passed
         if (this.questionHandler.questionCounter > 2) {
             clearInterval(this.answerInterval);
             console.log('Spel afgelopen')
             this.playedOutScreen();
+
+            // Add cookie
+            let url = new URL(window.location.href); // or construct from window.location
+            let params = new URLSearchParams(url.search.slice(1));
+            
+            //@ts-ignore
+            let cookie_val = cookie.get("passed");
+
+            for (let p of params) {
+                this.passed = window.atob(p[1]);
+            }
+
+            if (cookie_val == undefined || cookie_val == null) {
+                //@ts-ignore
+                cookie.set("passed", `,${this.passed}`, {expires: 366});
+            } else {
+                if (!cookie_val.match(this.passed)) {
+                    cookie_val = `${cookie_val},${this.passed}`;
+                    //@ts-ignore
+                    cookie.set("passed", cookie_val, {expires: 366});
+                }
+            }
+
             setTimeout(() => {
                 window.location.replace('index.html');
             }, 2000);

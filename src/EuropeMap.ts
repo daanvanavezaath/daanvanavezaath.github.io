@@ -67,6 +67,7 @@ class EuropeMap {
 
     public constructor() {
         this.draw_map();
+        this.color_country();
     }
 
     // assign countries to countries object
@@ -138,46 +139,6 @@ class EuropeMap {
         this.outside_europe["tunisia"] = this.map.path("M 564.89568,790.37084 C 568.72575,789.7105 569.91438,786.27664 574.93309,785.35216 C 576.51794,785.08799 581.00836,781.9183 582.197,783.63522 C 582.72529,784.42766 581.00836,785.35216 581.27249,786.27664 C 581.80079,788.786 583.64979,786.0125 583.38565,785.74836 C 582.98943,785.35216 582.06492,786.14458 581.66871,785.74836 C 579.95179,783.50315 587.61191,785.35216 588.00813,786.27664 C 588.27227,786.80493 586.42328,786.27664 586.15913,786.80493 C 586.02707,787.33321 587.21571,787.06907 587.61191,787.33321 C 587.87605,787.72943 586.8195,787.86149 586.68742,788.25772 C 586.02707,789.57843 588.93264,791.03121 589.19677,791.42743 C 589.72507,792.21984 589.32885,793.67263 590.12128,794.20091 C 590.25333,794.33298 596.06446,788.91807 598.97003,787.86149 C 599.23418,787.86149 599.23418,788.25772 599.23418,788.38978 C 599.49832,789.44637 600.15867,790.50292 600.02661,791.5595 C 599.76246,792.48398 598.70589,792.8802 598.17761,793.54057 C 597.12104,794.86128 596.72484,797.50269 595.66826,798.42719 C 592.89476,801.06862 588.00813,800.6724 591.70612,807.1439 C 593.1589,809.7853 595.0079,809.3891 595.93241,810.18152 C 596.32862,810.44567 595.80033,811.37018 596.19655,811.63432 C 596.98896,812.29467 598.30969,812.03052 599.1021,812.69087 C 599.23418,812.95503 598.70589,817.18129 598.83797,817.57751 C 599.1021,818.36995 600.55489,818.63409 600.81904,819.29443 L 561.99011,819.29443 C 562.12219,818.63409 560.00905,818.63409 559.87697,817.70958 C 559.34868,814.53987 560.6694,817.31337 560.80148,814.53987 C 561.06562,811.63432 559.34868,810.84189 559.61284,807.93631 C 559.61284,806.87975 561.32976,798.8234 561.1977,798.55926 C 560.6694,797.76683 558.02797,798.16305 558.55627,797.37062 C 559.61284,795.91785 561.1977,796.18197 562.38633,795.12542 C 564.49947,793.40849 560.80148,793.40849 561.99011,792.8802 C 562.51841,792.61606 565.6881,792.74814 565.2919,791.5595 C 565.15982,791.29534 564.89568,791.16327 564.89568,790.89914 C 564.76361,790.76706 564.89568,790.635 564.89568,790.37084 z ");
     }
 
-    /**
-     * Finds a text in array
-     * @param {string} text - country name
-     */
-    private find(text: string) {
-        return text;
-    }
-
-    /**
-     * Gets or generates cookies.
-     * @param {string} mode - the mode. Mandatory, choice "dissect" and "build".
-     * @param {any} country - country to put in cookies, optional, defaults null.
-     */
-    public country_cookie(mode: string, country: any = null) {
-        let clicked_country_array: any = [];
-        let clicked_country_cookie: string;
-
-        if (mode === "dissect") {
-            if (document.cookie) {
-                const cookies: string = document.cookie;
-                let cookie_array: any = cookies.split(";");
-                const regex = /countries_clicked/;
-
-                let i: number = cookie_array.indexOf(regex);
-                let country_cookie_array = cookie_array[i].split("=");
-                let countries_clicked = JSON.parse(country_cookie_array[1]);
-
-                return countries_clicked;
-            }
-        } else if (mode === "build") {
-            if (clicked_country_array.find(this.find(country)) === null) {
-                clicked_country_array.push(country);
-                clicked_country_cookie = JSON.stringify(clicked_country_array);
-                return document.cookie = `countries_clicked=${clicked_country_cookie}`;
-            }
-        } else {
-            return console.log("Choose 'dissect' or 'build'");
-        }
-    }
-
     // render map
     public draw_map() {
         // default styles (apparantly they don't work when defined out of scope?!)
@@ -224,13 +185,11 @@ class EuropeMap {
 
         // render European countries
         for (let country_name in this.european_countries) {
+
             (function(country) {
-                let passed = 0;
-        
                 country.attr(default_style);
-                if (passed === 1) {
-                    country.node.setAttribute("fill", this.country_color_passed[country_name]);
-                }
+                country.node.setAttribute("name", country_name);
+
                 country.transform("t-283.68719,-87.199905");
         
                 country[0].addEventListener("mouseover", function() {
@@ -238,13 +197,10 @@ class EuropeMap {
                 }, true);
         
                 country[0].addEventListener("mouseout", function() {
-                    if (passed === 0) {
-                        country.animate(default_style, animation_speed);
-                    } else {
-                        country.animate(default_style, animation_speed);
-                        //country.setAttribute("fill", colors_passed.country_name);
-                        country.node.setAttribute("fill", this.country_color_passed[country_name]);
-                    }
+                    country.animate(default_style, animation_speed);
+                    // for (let i = 1; i < countries_passed.length; i++) {
+                    //     country.node.setAttribute("fill", country_color_passed[i]);
+                    // }
                 }, true);
         
                 country.node.onclick = function() {
@@ -282,6 +238,30 @@ class EuropeMap {
             this.outside_europe[country_outside_europe].transform("t-283.68719,-87.199905");
         }
     }
+
+    public color_country() {
+        //@ts-ignore
+        let countries_passed = cookie.get("passed");
+        if (countries_passed == undefined || countries_passed == null) {
+            //@ts-ignore
+            cookie.set("passed", ",", {expires: 366});
+            //@ts-ignore
+            countries_passed = cookie.get("passed").split(",");
+        } else {
+            //@ts-ignore
+            countries_passed = cookie.get("passed").split(",");
+            console.log(countries_passed);
+        }
+
+        let country_color_passed = this.country_color_passed;
+        setInterval(() => {
+            for (let i = 1; i < countries_passed.length; i++) {
+                //console.log(countries_passed[i]);
+                let passed = document.querySelector(`[name="${countries_passed[i]}"]`);
+                passed.setAttribute("fill", country_color_passed[countries_passed[i]]);
+            }
+        }, 100);
+    }
 }
 
 window.addEventListener("load", init_map);
@@ -290,6 +270,13 @@ function init_map(): void {
     if (window.location.pathname.match(/\/game.html/)) {
         // do nothing
     } else {
-        new EuropeMap();
+        //@ts-ignore
+        if (cookie.get("passed") == undefined) {
+            //@ts-ignore
+            cookie.set("passed", "", {expires: 366});
+            new EuropeMap();
+        } else {
+            new EuropeMap();
+        }
     }
 }
