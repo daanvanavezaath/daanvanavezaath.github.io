@@ -81,6 +81,74 @@ class questionHandler {
             }
             ];
         }
+
+        if (this.countryController.getCountry() == 'Nederland') {
+            // Array with questions
+            this.questions = [{
+                number: 0,
+                question: 'Hoeveel mensen wonen er in Nederland?',
+                answer: 'C',
+                potentials: ['A: Ongeveer 10 miljoen', 'B: Ongeveer 16 miljoen', 'C: Ongeveer 17 miljoen', 'D: Ongeveer 20 miljoen']
+            },
+            {
+                number: 1,
+                question: 'Hoeveel procent is werkloos in Nederland?',
+                answer: 'D',
+                potentials: ['A: 1', 'B: 10', 'C: 50', 'D: 5']
+            },
+            {
+                number: 2,
+                question: 'Hoeveel procent is bejaard?',
+                answer: 'A',
+                potentials: ['A: Ongeveer 18', 'B: Ongeveer 8', 'C: Ongeveer 28', 'D: Ongeveer 5']
+            }
+            ];
+        }
+
+        if (this.countryController.getCountry() == 'Engeland') {
+            // Array with questions
+            this.questions = [{
+                number: 0,
+                question: 'Wat is de naam van het Engelse koningshuis?',
+                answer: 'D',
+                potentials: ['A: Saxe-Coburg', 'B: London', 'C: Buckingham Palace', 'D: Winsdor']
+            },
+            {
+                number: 1,
+                question: 'Wat is een nette naam voor agent?',
+                answer: 'C',
+                potentials: ['A: Smeris', 'B: Pigs', 'C: Bobby', 'D: My Kok']
+            },
+            {
+                number: 2,
+                question: 'Wat heeft een Engelse agent niet?',
+                answer: 'B',
+                potentials: ['A: Wapenstok', 'B: Pistool', 'C: Portofoon', 'D: Handboeien']
+            }
+            ];
+        }
+
+        if (this.countryController.getCountry() == 'IJsland') {
+            this.questions = [{
+                number: 0,
+                question: 'Wie was de man die IJsland haar naam gaf?',
+                answer: 'C',
+                potentials: ['A: Halldór Ásgrímsson', 'B: Hannes Hafstein', 'C: Hrafna-Flóki', 'D: Ólafur Ragnar Grímsson']
+            },
+            {
+                number: 1,
+                question: 'Wat is de hoofdstad van IJsland?',
+                answer: 'A',
+                potentials: ['A: Reykjavík', 'B: Keflavik', 'C: Húsavík', 'D: Akureyri']
+            },
+            {
+                number: 2,
+                question: 'Wanneer werd IJsland onafhankelijk van Denemarken?',
+                answer: 'B',
+                potentials: ['A: 1872', 'B: 1944', 'C: 1968', 'D: 2000']
+            }
+            ];
+        }
     }
 
     // Increases the question counter with 1

@@ -26,6 +26,12 @@ class countryController {
             case "netherlands":
                 this.country = "Nederland";
                 break;
+            case "uk":
+                this.country = "Engeland";
+                break;
+            case "iceland":
+                this.country = "IJsland";
+                break;
             default:
                 this.country = null;
                 break;

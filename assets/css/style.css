@@ -197,6 +197,20 @@ img {
 	background-size: 56%;
 }
 
+.Nederland {
+	background-image: url(../images/Nederland/bg.jpg);
+	background-size: 56%;
+}
+
+.Engeland {
+	background-image: url(../images/Engeland/bg.jpg);
+	background-size: 56%;
+}
+
+.IJsland {
+	background-image: url(../images/IJsland/bg.png);
+	background-size: 56%;
+}
 
 /* Styling van de video */
 #video {

@@ -1,3 +1,17 @@
+class AskName {
+    constructor() {
+        this.save_name();
+    }
+    save_name() {
+        let name;
+        if (cookie.get("name") == undefined || cookie.get("name") == null) {
+            name = prompt("Vul je naam in!", "Speler");
+            cookie.set("name", name, { expires: 366 });
+        }
+        else {
+        }
+    }
+}
 class Canvas {
     constructor(canvas) {
         this.canvas = canvas;
@@ -32,10 +46,10 @@ class Canvas {
         this.ctx.rect(aXpos, aYpos, width, height);
         this.ctx.fill();
     }
-    writeNameToRectangle(text, aXpos, aYpos, maxWidth, fontSize) {
+    writeNameToRectangle(aXpos, aYpos, maxWidth, fontSize) {
         this.ctx.fillStyle = '#FFF';
         this.ctx.font = `${fontSize}px Walkway`;
-        this.ctx.fillText(`ikReis`, aXpos, aYpos, maxWidth);
+        this.ctx.fillText(`ikReis | ${cookie.get("name")}`, aXpos, aYpos, maxWidth);
     }
     writeCountryToRectangle(text, aXpos, aYpos, maxWidth, fontSize) {
         this.ctx.fillStyle = '#FFF';
@@ -261,6 +275,7 @@ function init_map() {
     if (window.location.pathname.match(/\/game.html/)) {
     }
     else {
+        new AskName();
         if (cookie.get("passed") == undefined) {
             cookie.set("passed", "", { expires: 366 });
             new EuropeMap();
@@ -273,7 +288,9 @@ function init_map() {
 class Game {
     constructor() {
         this.countryController = new countryController;
-        this.urlFR = `./assets/video/${this.country}.mp4`;
+        this.country = this.countryController.getCountry();
+        this.url = `./assets/video/${this.country}.mp4`;
+        this.life_handler = new LifeHandler();
         this.countryController = new countryController;
         this.country = this.countryController.getCountry();
         const canvasElement = document.getElementById('canvas');
@@ -305,7 +322,7 @@ class Game {
     gameScreen() {
         this.canvas.drawRectangleToCanvas("#6597cf", 0, 0, this.canvas.getWidth(), 100);
         this.canvas.drawRectangleToCanvas("#6597cf", this.canvas.getWidth() - 700, 150, 600, 400);
-        this.canvas.writeNameToRectangle('', 50, 60, this.canvas.getWidth(), 30);
+        this.canvas.writeNameToRectangle(120, 60, this.canvas.getWidth(), 30);
         this.canvas.writeCountryToRectangle(`Je bent in ${this.country}`, this.canvas.getWidth() - 250, 60, this.canvas.getWidth(), 30);
     }
     writeLevelAssets() {
@@ -355,12 +372,26 @@ class Game {
                 this.writeLevelAssets();
                 this.drawSouvenirs();
                 this.answerpadding = 300;
-                this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
-                setTimeout(() => {
-                    this.keyHandler.resetKeys();
-                    this.levelScreen();
-                    this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
-                }, 3000);
+                this.life_handler.subtract_life();
+                this.life_handler.draw_lifes();
+                if (this.life_handler.return_life() == 0) {
+                    this.canvas.writeTextToCanvas("Je hebt geen levens meer! :(", 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                }
+                else {
+                    this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                }
+                if (this.life_handler.return_life() == 0) {
+                    setTimeout(() => {
+                        window.location.replace('index.html');
+                    }, 3000);
+                }
+                else {
+                    setTimeout(() => {
+                        this.keyHandler.resetKeys();
+                        this.levelScreen();
+                        this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
+                    }, 3000);
+                }
             }
         }
         if (this.questionHandler.questionCounter > 2) {
@@ -395,6 +426,8 @@ class Game {
         this.showQuestion();
         this.keyHandler.runKeyHandler();
         this.showAnswers();
+        this.life_handler.draw_lifes();
+        console.log(this.country);
     }
     playedOutScreen() {
         this.canvas.Clear();
@@ -403,6 +436,7 @@ class Game {
         this.drawSouvenirs();
         this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir3_h.png`, 530, 150, 150, 150, "QuesThree");
         this.canvas.writeTextToCanvas('Goed gedaan! Level uitgespeeld!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+        this.life_handler.draw_lifes();
     }
     showVideo() {
         var videlem = document.getElementById("video");
@@ -414,11 +448,14 @@ class Game {
         var videlem = document.getElementById("video");
         var sourceMP4 = document.createElement("source");
         sourceMP4.type = "video/mp4";
-        sourceMP4.src = this.urlFR;
+        sourceMP4.src = this.url;
         videlem.appendChild(sourceMP4);
         videlem.id = "video";
         this.showVideo();
         this.canvas.writeCloseButtonToCanvas();
+    }
+    video_source() {
+        return this.url;
     }
 }
 window.addEventListener('load', init);
@@ -426,7 +463,54 @@ function init() {
     if (window.location.pathname.match(/\/index.html/)) {
     }
     else {
-        setTimeout(function () { const ikReis = new Game(); }, 1000);
+        const ikReis = new Game();
+        const videlem = document.getElementById("video");
+        videlem.setAttribute("src", ikReis.video_source());
+        setTimeout(function () { ikReis; }, 1000);
+    }
+}
+class LifeHandler {
+    constructor() {
+        this.canvas = new Canvas(document.getElementById('canvas'));
+        this.lifes = 3;
+        this.transparent_life = "./assets/images/redcrosspng_tr.png";
+        this.opaque_life = "./assets/images/redcrosspng.png";
+    }
+    subtract_life() {
+        if (this.lifes > 0) {
+            this.lifes -= 1;
+            console.log(this.lifes);
+        }
+        if (this.lifes == 0) {
+            setTimeout(() => {
+                window.location.replace('index.html');
+            }, 2000);
+        }
+    }
+    draw_lifes() {
+        if (this.lifes == 3) {
+            this.canvas.writeImageFromFileToCanvas(this.transparent_life, this.canvas.getWidth() - 700, 600, 100, 100, "one_transp");
+            this.canvas.writeImageFromFileToCanvas(this.transparent_life, this.canvas.getWidth() - 450, 600, 100, 100, "one_transp");
+            this.canvas.writeImageFromFileToCanvas(this.transparent_life, this.canvas.getWidth() - 200, 600, 100, 100, "one_transp");
+        }
+        else if (this.lifes == 2) {
+            this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 700, 600, 100, 100, "one_transp");
+            this.canvas.writeImageFromFileToCanvas(this.transparent_life, this.canvas.getWidth() - 450, 600, 100, 100, "one_transp");
+            this.canvas.writeImageFromFileToCanvas(this.transparent_life, this.canvas.getWidth() - 200, 600, 100, 100, "one_transp");
+        }
+        else if (this.lifes == 1) {
+            this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 700, 600, 100, 100, "one_transp");
+            this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 450, 600, 100, 100, "one_transp");
+            this.canvas.writeImageFromFileToCanvas(this.transparent_life, this.canvas.getWidth() - 200, 600, 100, 100, "one_transp");
+        }
+        else {
+            this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 700, 600, 100, 100, "one_transp");
+            this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 450, 600, 100, 100, "one_transp");
+            this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 200, 600, 100, 100, "one_transp");
+        }
+    }
+    return_life() {
+        return this.lifes;
     }
 }
 class countryController {
@@ -450,6 +534,12 @@ class countryController {
                 break;
             case "netherlands":
                 this.country = "Nederland";
+                break;
+            case "uk":
+                this.country = "Engeland";
+                break;
+            case "iceland":
+                this.country = "IJsland";
                 break;
             default:
                 this.country = null;
@@ -563,6 +653,69 @@ class questionHandler {
                     question: 'Wat wordt er bedoeld met "Schlager"?',
                     answer: 'B',
                     potentials: ['A: Slaan', 'B: Muziek', "C: Slager", 'D: Vleesindustrie']
+                }
+            ];
+        }
+        if (this.countryController.getCountry() == 'Nederland') {
+            this.questions = [{
+                    number: 0,
+                    question: 'Hoeveel mensen wonen er in Nederland?',
+                    answer: 'C',
+                    potentials: ['A: Ongeveer 10 miljoen', 'B: Ongeveer 16 miljoen', 'C: Ongeveer 17 miljoen', 'D: Ongeveer 20 miljoen']
+                },
+                {
+                    number: 1,
+                    question: 'Hoeveel procent is werkloos in Nederland?',
+                    answer: 'D',
+                    potentials: ['A: 1', 'B: 10', 'C: 50', 'D: 5']
+                },
+                {
+                    number: 2,
+                    question: 'Hoeveel procent is bejaard?',
+                    answer: 'A',
+                    potentials: ['A: Ongeveer 18', 'B: Ongeveer 8', 'C: Ongeveer 28', 'D: Ongeveer 5']
+                }
+            ];
+        }
+        if (this.countryController.getCountry() == 'Engeland') {
+            this.questions = [{
+                    number: 0,
+                    question: 'Wat is de naam van het Engelse koningshuis?',
+                    answer: 'D',
+                    potentials: ['A: Saxe-Coburg', 'B: London', 'C: Buckingham Palace', 'D: Winsdor']
+                },
+                {
+                    number: 1,
+                    question: 'Wat is een nette naam voor agent?',
+                    answer: 'C',
+                    potentials: ['A: Smeris', 'B: Pigs', 'C: Bobby', 'D: My Kok']
+                },
+                {
+                    number: 2,
+                    question: 'Wat heeft een Engelse agent niet?',
+                    answer: 'B',
+                    potentials: ['A: Wapenstok', 'B: Pistool', 'C: Portofoon', 'D: Handboeien']
+                }
+            ];
+        }
+        if (this.countryController.getCountry() == 'IJsland') {
+            this.questions = [{
+                    number: 0,
+                    question: 'Wie was de man die IJsland haar naam gaf?',
+                    answer: 'C',
+                    potentials: ['A: Halldór Ásgrímsson', 'B: Hannes Hafstein', 'C: Hrafna-Flóki', 'D: Ólafur Ragnar Grímsson']
+                },
+                {
+                    number: 1,
+                    question: 'Wat is de hoofdstad van IJsland?',
+                    answer: 'A',
+                    potentials: ['A: Reykjavík', 'B: Keflavik', 'C: Húsavík', 'D: Akureyri']
+                },
+                {
+                    number: 2,
+                    question: 'Wanneer werd IJsland onafhankelijk van Denemarken?',
+                    answer: 'B',
+                    potentials: ['A: 1872', 'B: 1944', 'C: 1968', 'D: 2000']
                 }
             ];
         }

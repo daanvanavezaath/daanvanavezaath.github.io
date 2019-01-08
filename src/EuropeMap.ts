@@ -216,6 +216,7 @@ class EuropeMap {
 
         for (let i = 0; i < this.russian_federation.length; i++) {
             this.russian_federation[i].attr(default_style);
+            //this.russian_federation[i].setAttribute("name", "russia");
         };
 
         // ru_fed.addEventListener("mouseover", function() {
@@ -272,6 +273,7 @@ function init_map(): void {
     if (window.location.pathname.match(/\/game.html/)) {
         // do nothing
     } else {
+        new AskName();
         //@ts-ignore
         if (cookie.get("passed") == undefined) {
             //@ts-ignore

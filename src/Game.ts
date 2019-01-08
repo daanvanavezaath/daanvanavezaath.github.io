@@ -4,11 +4,12 @@ class Game {
     private readonly keyHandler: keyHandler;
     private readonly questionHandler: questionHandler;
     private countryController = new countryController;
-    private country: string;
+    private country: string = this.countryController.getCountry();
     private goodAnswer: string;
     private answerInterval: any;
     private answerpadding: number;
-    private urlFR: string = `./assets/video/${this.country}.mp4`;
+    private url: string = `./assets/video/${this.country}.mp4`;
+    private life_handler = new LifeHandler();
 
     private passed: string;
 
@@ -52,7 +53,7 @@ class Game {
         // Writes top bar with name in it to the canvas  
         this.canvas.drawRectangleToCanvas("#6597cf", 0, 0, this.canvas.getWidth(), 100);
         this.canvas.drawRectangleToCanvas("#6597cf", this.canvas.getWidth() - 700, 150, 600, 400);
-        this.canvas.writeNameToRectangle('', 50, 60, this.canvas.getWidth(), 30);
+        this.canvas.writeNameToRectangle(120, 60, this.canvas.getWidth(), 30);
         this.canvas.writeCountryToRectangle(`Je bent in ${this.country}`, this.canvas.getWidth() - 250, 60, this.canvas.getWidth(), 30);
     }
 
@@ -141,14 +142,28 @@ class Game {
                 this.drawSouvenirs();
                 // Sets answerpadding to the default 300
                 this.answerpadding = 300;
+                // subtract life
+                this.life_handler.subtract_life();
+                // draw lifes
+                this.life_handler.draw_lifes();
                 // Writes text to the canvas
-                this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
-                // After 3 secs, load level screen again and restart the checkAnswer-interval
-                setTimeout(() => {
-                    this.keyHandler.resetKeys();
-                    this.levelScreen();
-                    this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
-                }, 3000);
+                if (this.life_handler.return_life() == 0) {
+                    this.canvas.writeTextToCanvas("Je hebt geen levens meer! :(", 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                } else {
+                    this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                }
+                // After 3 secs, load level screen again and restart the checkAnswer-interval. Check lifes first
+                if (this.life_handler.return_life() == 0) {
+                    setTimeout(() => {
+                        window.location.replace('index.html');
+                    }, 3000);
+                } else {
+                    setTimeout(() => {
+                        this.keyHandler.resetKeys();
+                        this.levelScreen();
+                        this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
+                    }, 3000);
+                }
             }
         }
 
@@ -203,6 +218,9 @@ class Game {
         this.keyHandler.runKeyHandler();
         // Shows the potential answers according to the question
         this.showAnswers();
+        // draw lifes
+        this.life_handler.draw_lifes();
+        console.log(this.country);
     }
 
     // By running this, render the Played Out screen
@@ -219,6 +237,8 @@ class Game {
         this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir3_h.png`, 530, 150, 150, 150, "QuesThree");
         // Shows level played out text
         this.canvas.writeTextToCanvas('Goed gedaan! Level uitgespeeld!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+        // show lifes
+        this.life_handler.draw_lifes();
     }
 
     // Function to show the video
@@ -240,7 +260,7 @@ class Game {
         // Sets the type of the video
         sourceMP4.type = "video/mp4";
         // Sets the source of the video
-        sourceMP4.src = this.urlFR;
+        sourceMP4.src = this.url;
         // Append source to DOM element
         videlem.appendChild(sourceMP4);
         // Gives DOM element an ID
@@ -249,6 +269,10 @@ class Game {
         this.showVideo();
         // Shows close button
         this.canvas.writeCloseButtonToCanvas();
+    }
+
+    public video_source() {
+        return this.url;
     }
 }
 
@@ -260,6 +284,11 @@ function init(): void {
     if (window.location.pathname.match(/\/index.html/)) {
         // do nothing
     } else {
-        setTimeout(function () { const ikReis = new Game(); }, 1000);
+        const ikReis = new Game();
+
+        const videlem = document.getElementById("video");
+        videlem.setAttribute("src", ikReis.video_source());
+
+        setTimeout(function () { ikReis }, 1000);
     }
 }

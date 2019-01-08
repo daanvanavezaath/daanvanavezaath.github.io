@@ -84,10 +84,11 @@ class Canvas {
     }
 
     // Writes name to the rectangle if provided
-    public writeNameToRectangle(text: string, aXpos: number, aYpos: number, maxWidth: number, fontSize: number) {
+    public writeNameToRectangle(aXpos: number, aYpos: number, maxWidth: number, fontSize: number) {
         this.ctx.fillStyle = '#FFF';
         this.ctx.font = `${fontSize}px Walkway`;
-        this.ctx.fillText(`ikReis`, aXpos, aYpos, maxWidth);
+        //@ts-ignore
+        this.ctx.fillText(`ikReis | ${cookie.get("name")}`, aXpos, aYpos, maxWidth);
     }
     
 
