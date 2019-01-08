@@ -249,7 +249,9 @@ class EuropeMap {
         setInterval(() => {
             for (let i = 1; i < countries_passed.length; i++) {
                 let passed = document.querySelector(`[name="${countries_passed[i]}"]`);
-                passed.setAttribute("fill", country_color_passed[countries_passed[i]]);
+                if (passed.getAttribute("fill") == "#CCCCCC".toLowerCase()) {
+                    passed.setAttribute("fill", country_color_passed[countries_passed[i]]);
+                }
             }
         }, 100);
     }
