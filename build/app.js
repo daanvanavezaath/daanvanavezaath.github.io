@@ -333,6 +333,7 @@ class Game {
     showQuestion() {
         let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
         this.canvas.writeTextToCanvas(questionObject.question, 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+        this.canvas.writeTextToCanvas("Druk de toets in van het juiste antwoord!", 25, this.canvas.getWidth() - 400, 250, "#FFF", "center");
         this.goodAnswer = questionObject.answer;
         this.canvas.writeTextToCanvas("TIP! Druk op 'V' voor een informatievideo!", 30, this.canvas.getWidth() - 400, 520, '#FFF', 'center');
     }

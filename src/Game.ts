@@ -71,6 +71,8 @@ class Game {
         let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
         // Writes the question to the game screen
         this.canvas.writeTextToCanvas(questionObject.question, 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+        // Say they need to use keyboard input
+        this.canvas.writeTextToCanvas("Druk de toets in van het juiste antwoord!", 25, this.canvas.getWidth() - 400, 250, "#FFF", "center");
         // Picks the good answer
         this.goodAnswer = questionObject.answer;
         // Writes video explaining string
