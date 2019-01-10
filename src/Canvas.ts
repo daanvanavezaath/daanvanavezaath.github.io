@@ -2,7 +2,6 @@ class Canvas {
 
     private readonly canvas: HTMLCanvasElement;
     private readonly ctx: CanvasRenderingContext2D;
-    private readonly video: any = document.getElementById("video");
 
     constructor(canvas:HTMLCanvasElement) {
         this.canvas = canvas;
@@ -85,10 +84,11 @@ class Canvas {
     }
 
     // Writes name to the rectangle if provided
-    public writeNameToRectangle(text: string, aXpos: number, aYpos: number, maxWidth: number, fontSize: number) {
+    public writeNameToRectangle(aXpos: number, aYpos: number, maxWidth: number, fontSize: number) {
         this.ctx.fillStyle = '#FFF';
         this.ctx.font = `${fontSize}px Walkway`;
-        this.ctx.fillText(`ikReis | ${text}`, aXpos, aYpos, maxWidth);
+        //@ts-ignore
+        this.ctx.fillText(`ikReis | ${cookie.get("name")}`, aXpos, aYpos, maxWidth);
     }
     
 
@@ -100,14 +100,13 @@ class Canvas {
     }
 
     public hideVideo() {
-        this.video.style.display = "none";
+        var videlem = document.getElementById("video")
+        videlem.style.display = "none";
     }
 
-    public show_video() {
-        this.video.style.display = "inline";
-    }
 
     public writeCloseButtonToCanvas() {
         this.writeTextToCanvas("Druk op 'R' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
     }
 }
+

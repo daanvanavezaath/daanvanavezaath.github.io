@@ -3,24 +3,19 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Map</title>
+        <title>ikReis | Kies een land</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/main.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
-        <script src="./build/map.js"></script>
+        <script src="./assets/lib/raphael.js"></script>
+        <script src="./assets/lib/raphael_plugins/group.js"></script>
+        <script src="./assets/lib/cookie.js"></script>
     </head>
     <body>
         <div id="headerContainer">
            <h1>ikReis | Kies een land</h1>
         </div>
-        <div id="europe_map" style="background-color: white !important; border: none;"></div>
-        <script src="./assets/lib/raphael.js"></script>
-        <script src="./assets/lib/raphael_plugins/group.js"></script>
-        <script src="./assets/js/europe_map.js"></script>
-        <!--<div class="world_map_parent">
-            <img src="./assets/world/europe_base.svg" class="world_map_base">
-            <img src="./assets/world/countries/done/france.png" class="country_done">
-            <img src="./assets/world/countries/done/netherlands.png" class="country_done">
-        </div>-->
+        <div id="europe_map" style="border: none;"></div>
+        <script src="./build/app.js"></script>
     </body>
 </html>

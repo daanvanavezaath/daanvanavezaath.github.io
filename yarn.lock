@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+cookie_js@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/cookie_js/-/cookie_js-1.2.2.tgz#51bed5f02966e26647b5368d1f5975b5f01906c4"
+  integrity sha1-Ub7V8Clm4mZHtTaNH1l1tfAZBsQ=
+
 typescript@^3.1.6:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.6.tgz#b6543a83cfc8c2befb3f4c8fba6896f5b0c9be68"
