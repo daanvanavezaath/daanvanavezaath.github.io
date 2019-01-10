@@ -25,11 +25,17 @@ class keyHandler {
         if (event.key == 'd') {
             this.keyPressed = 'D';
         }
-        if (event.key == 'v') {
-            this.keyPressed = 'V';
+        if (event.key == 'h') {
+            this.keyPressed = 'H';
         }
         if (event.key == 'r') {
             this.keyPressed = 'R';
+        }
+        if (event.key == 'v') {
+            this.keyPressed = 'V';
+        }
+        if (event.key == 'm') {
+            this.keyPressed = 'M';
         }
     }
 

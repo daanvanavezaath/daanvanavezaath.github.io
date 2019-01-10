@@ -56,12 +56,25 @@ class Canvas {
         this.ctx.font = `${fontSize}px Walkway`;
         this.ctx.fillText(text, aXpos, aYpos, maxWidth);
     }
-    hideVideo() {
-        var videlem = document.getElementById("video");
-        videlem.style.display = "none";
-    }
     writeCloseButtonToCanvas() {
-        this.writeTextToCanvas("Druk op 'R' om de video te sluiten...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
+        this.writeTextToCanvas("Druk op 'R' om terug naar de vragen te gaan...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
+    }
+}
+class ClearCookies {
+    constructor() {
+        this.cookie_id = document.getElementById("clear_cookies");
+        this.clear_cookies();
+    }
+    clear_cookies() {
+        this.cookie_id.addEventListener("click", function () {
+            if (confirm("Weet je zeker dat je opnieuw wilt beginnen?")) {
+                cookie.set("passed", " ", { expires: 366 });
+                cookie.remove("name");
+                setTimeout(() => location.reload(), 100);
+            }
+            else {
+            }
+        });
     }
 }
 class EuropeMap {
@@ -124,6 +137,7 @@ class EuropeMap {
         ];
         this.draw_map();
         this.color_country();
+        new ClearCookies();
     }
     assign_countries() {
         this.european_countries["netherlands"] = this.map.path("M 522.76497,538.90736 C 523.16118,539.03943 523.42532,539.1715 523.82154,539.03943 C 524.74605,539.03943 522.23669,536.00179 525.4064,536.92629 C 525.67054,536.92629 525.14226,537.58665 525.27432,537.71872 C 526.85919,539.03943 527.2554,535.86972 528.44403,536.79422 C 528.84025,537.19044 527.38748,537.98287 527.78369,538.24701 C 530.82131,539.83184 528.17989,537.85079 530.55717,537.32252 C 530.95339,537.19044 531.61376,541.0205 532.53825,541.15256 C 534.65138,541.54878 537.42487,541.41672 539.14179,543.66192 C 539.27387,543.92607 538.61353,544.19021 538.48145,544.45435 C 538.21731,545.24677 537.55695,545.90714 537.42487,546.69955 C 537.42487,546.96369 538.08524,546.83161 537.95316,547.09577 C 537.82108,547.49198 537.16073,547.62406 537.02865,548.15234 C 536.10416,551.45411 538.34938,550.52963 540.46252,550.66169 L 540.59458,550.66169 C 540.33044,550.26548 540.19836,549.86926 540.19836,549.73719 C 540.33044,549.20891 541.25493,549.20891 541.38701,548.68063 C 541.78323,546.43541 537.95316,545.64298 539.14179,545.37884 C 539.53801,545.24677 539.80216,545.77506 540.0663,545.77506 C 540.0663,545.77506 542.57566,543.52984 542.57566,543.52984 C 542.70773,542.86949 540.99079,543.66192 541.51909,542.60535 C 541.9153,541.68086 542.83979,541.0205 543.23601,540.09601 C 544.42464,537.19044 541.51909,535.0773 540.72666,533.6245 C 540.59458,533.36038 540.85872,532.96416 540.99079,532.70002 C 540.99079,532.43587 540.72666,532.03965 540.99079,531.90759 C 541.65115,531.51137 542.44358,531.90759 543.23601,531.64344 C 543.50015,531.51137 542.97187,530.71894 543.23601,530.85102 C 544.02843,531.11516 544.55672,532.03965 545.48121,532.03965 C 546.40572,532.17173 549.97164,530.98308 550.36786,530.05859 C 550.76406,529.13408 547.85849,529.00203 549.04714,528.2096 C 551.16028,526.75682 553.66963,526.22853 553.14134,522.92674 C 553.00928,521.07775 548.12264,521.87018 549.31129,519.88911 C 549.44335,519.49291 550.10371,519.88911 550.10371,519.62497 C 550.23577,519.22875 549.57543,518.83254 549.70751,518.43632 C 549.70751,518.17218 550.10371,518.17218 550.36786,518.17218 C 551.29234,518.17218 552.08477,518.5684 553.00928,518.5684 C 554.06585,518.5684 553.14134,516.45526 553.53756,515.3987 C 553.80171,514.4742 556.0469,510.24792 555.78277,508.00271 C 553.14134,509.32342 552.8772,504.43679 550.63198,503.9085 C 548.65092,503.51228 538.21731,505.7575 537.02865,507.6065 C 536.3683,508.39893 536.10416,509.19135 535.57588,509.8517 C 535.17967,510.64413 534.5193,511.17242 533.1986,511.56864 C 533.1986,511.56864 533.06653,511.56864 533.06653,511.56864 C 532.14203,511.83276 531.08547,511.43655 530.16096,511.43655 C 529.76474,511.43655 529.36853,511.17242 529.23646,511.3045 C 527.51953,513.41763 528.04782,517.64389 527.2554,519.88911 C 526.46297,521.87018 524.87812,524.11539 523.42532,525.70025 C 522.89706,526.3606 522.50084,527.15303 521.84048,527.54923 C 521.44426,527.81339 520.51977,527.2851 520.38771,527.81339 C 520.12355,528.60582 521.31218,529.66237 520.91598,530.4548 C 519.59527,532.56794 515.50107,531.51137 516.42555,532.03965 C 517.48213,532.70002 518.27455,533.6245 519.4632,534.15279 C 519.99149,534.28487 520.51977,533.49245 520.91598,533.6245 C 521.44426,533.75659 522.36877,534.54901 521.97255,534.94522 C 521.31218,535.34144 519.59527,533.88865 519.59527,534.68108 C 519.72734,535.86972 523.16118,535.73764 522.50084,536.66215 C 520.51977,539.30358 518.67077,534.41695 517.87835,534.28487 C 515.36899,533.6245 512.99172,534.02073 513.38793,534.94522 C 513.38793,535.0773 517.48213,537.85079 518.27455,537.71872 C 518.53869,537.71872 518.40663,537.19044 518.67077,536.92629 C 519.19906,536.53007 519.72734,537.45458 520.25563,537.58665 C 520.78392,537.85079 521.57634,537.32252 522.10463,537.85079 C 522.36877,538.11493 522.63291,538.51115 522.76497,538.90736 z M 535.57588,509.8517 C 534.5193,510.24792 533.46274,510.51206 533.1986,511.43655 C 533.1986,511.56864 533.1986,511.56864 533.1986,511.56864 C 531.8779,516.19112 537.68902,514.07798 535.57588,515.66284 C 534.65138,516.32318 533.1986,516.05904 532.67031,516.98355 C 532.00996,517.90806 533.72688,519.62497 532.93445,520.4174 C 532.67031,520.81361 531.3496,520.81361 531.61376,521.20983 C 531.61376,521.20983 536.76451,523.58711 536.76451,523.58711 C 537.55695,523.58711 542.97187,519.49291 541.25493,517.77597 C 540.59458,517.11561 538.87767,517.37977 538.61353,516.45526 C 538.34938,515.53077 540.46252,514.60627 540.0663,513.68176 C 539.53801,512.49313 536.3683,514.07798 536.3683,512.88933 C 536.50038,511.96484 537.02865,511.17242 537.16073,510.24792 C 537.16073,509.98378 536.89659,509.71962 536.76451,509.45549 C 536.50038,509.58756 536.10416,509.71962 535.57588,509.8517 z M 512.46342,537.85079 C 512.19929,541.28464 514.97278,539.03943 516.95384,539.96392 C 517.21798,540.09601 516.68972,540.62429 516.95384,540.88843 C 518.53869,541.945 519.85941,540.09601 520.91598,539.1715 C 520.25563,538.51115 519.4632,537.98287 519.19906,537.85079 C 518.53869,537.71872 518.40663,538.90736 517.74627,538.90736 C 515.50107,538.90736 516.95384,537.58665 514.31243,537.19044 C 513.65207,537.05836 512.99172,537.05836 512.19929,537.32252 L 512.46342,537.85079 z");
@@ -216,28 +230,46 @@ class EuropeMap {
             fill: "#C6ECFF",
         });
         this.assign_countries();
+        const added_countries = ["france", "belgium", "germany", "netherlands", "uk", "iceland"];
         for (let country_name in this.european_countries) {
-            (function (country) {
-                country.attr(default_style);
-                country.node.setAttribute("name", country_name);
-                country.transform("t-283.68719,-87.199905");
-                country[0].addEventListener("mouseover", function () {
-                    country.animate(animation_properties, animation_speed);
-                }, true);
-                country[0].addEventListener("mouseout", function () {
-                    country.animate(default_style, animation_speed);
-                }, true);
-                country.node.onclick = function () {
-                    country_name = window.btoa(country_name);
-                    window.location.replace(`game.html?country=${country_name}`);
-                };
-            })(this.european_countries[country_name]);
+            let added;
+            added_countries.find(function (el) {
+                if (el == country_name) {
+                    return added = true;
+                }
+                else {
+                    return added = false;
+                }
+            });
+            if (added == true) {
+                (function (country) {
+                    country.attr(default_style);
+                    country.node.setAttribute("name", country_name);
+                    country.transform("t-283.68719,-87.199905");
+                    country[0].addEventListener("mouseover", function () {
+                        country.animate(animation_properties, animation_speed);
+                    }, true);
+                    country[0].addEventListener("mouseout", function () {
+                        country.animate(default_style, animation_speed);
+                    }, true);
+                    country.node.onclick = function () {
+                        country_name = window.btoa(country_name);
+                        window.location.replace(`game.html?country=${country_name}`);
+                    };
+                })(this.european_countries[country_name]);
+            }
+            else {
+                (function (country) {
+                    country.attr(countries_outside_europe_style);
+                    country.transform("t-283.68719,-87.199905");
+                })(this.european_countries[country_name]);
+            }
         }
         ;
         let ru_fed = this.map.group("europe_map", this.russian_federation)
             .translate("0.1320712,0,0,0.1320712,-494.4106,-115.061358");
         for (let i = 0; i < this.russian_federation.length; i++) {
-            this.russian_federation[i].attr(default_style);
+            this.russian_federation[i].attr(countries_outside_europe_style);
         }
         ;
         for (let water_body in this.water) {
@@ -290,6 +322,7 @@ class Game {
         this.countryController = new countryController;
         this.country = this.countryController.getCountry();
         this.url = `./assets/video/${this.country}.mp4`;
+        this.backgroundMusicUrl = './assets/audio/music.mp3';
         this.life_handler = new LifeHandler();
         this.countryController = new countryController;
         this.country = this.countryController.getCountry();
@@ -301,6 +334,20 @@ class Game {
         this.answerpadding = 300;
         this.levelScreen();
         this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
+        this.backgroundMusic = new Audio(this.backgroundMusicUrl);
+        this.musicMuted = false;
+        this.checkForMute();
+    }
+    playBackgroundMusic() {
+        this.backgroundMusic.play();
+        this.musicMuted = false;
+        this.canvas.writeImageFromFileToCanvas('./assets/images/soundOn.png', 350, 30, 40, 40, 'soundOnButton');
+    }
+    pauseBackgroundMusic() {
+        this.backgroundMusic.pause();
+        this.musicMuted = true;
+        this.canvas.writeImageFromFileToCanvas('./assets/images/mute.png', 350, 30, 40, 40, 'muteButton');
+        this.canvas.writeTextToCanvas('M-toets: Geluid aan', 15, 460, 55, '#FFF', 'center');
     }
     drawSouvenirs() {
         if (this.questionHandler.question0 != true) {
@@ -322,8 +369,6 @@ class Game {
     gameScreen() {
         this.canvas.drawRectangleToCanvas("#6597cf", 0, 0, this.canvas.getWidth(), 100);
         this.canvas.drawRectangleToCanvas("#6597cf", this.canvas.getWidth() - 700, 150, 600, 400);
-        this.canvas.writeNameToRectangle(120, 60, this.canvas.getWidth(), 30);
-        this.canvas.writeCountryToRectangle(`Je bent in ${this.country}`, this.canvas.getWidth() - 250, 60, this.canvas.getWidth(), 30);
     }
     writeLevelAssets() {
         var canvas = document.getElementById("canvas");
@@ -335,7 +380,12 @@ class Game {
         this.canvas.writeTextToCanvas(questionObject.question, 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
         this.canvas.writeTextToCanvas("Druk de toets in van het juiste antwoord!", 25, this.canvas.getWidth() - 400, 250, "#FFF", "center");
         this.goodAnswer = questionObject.answer;
-        this.canvas.writeTextToCanvas("TIP! Druk op 'V' voor een informatievideo!", 30, this.canvas.getWidth() - 400, 520, '#FFF', 'center');
+        this.canvas.writeTextToCanvas("Druk op 'V' voor de informatievideo!", 25, this.canvas.getWidth() - 400, 495, '#FFF', 'center');
+        this.canvas.writeTextToCanvas("Druk op 'H' voor een hint!", 25, this.canvas.getWidth() - 400, 525, '#FFF', 'center');
+    }
+    storeHint() {
+        let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
+        this.canvas.writeTextToCanvas(questionObject.hint, 25, this.canvas.getWidth() - 400, 250, "#FFF", "center");
     }
     showAnswers() {
         let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
@@ -351,23 +401,71 @@ class Game {
         this.canvas.Clear();
         this.levelScreen();
     }
+    checkForMute() {
+        if (this.musicMuted == true) {
+            this.pauseBackgroundMusic();
+            this.keyHandler.resetKeys();
+            this.canvas.Clear();
+            this.resetLevel();
+            this.canvas.writeTextToCanvas('M-toets: Geluid aan', 20, 460, 57, '#FFF', 'center');
+        }
+        else if (this.musicMuted == false) {
+            this.playBackgroundMusic();
+            this.keyHandler.resetKeys();
+            this.canvas.Clear();
+            this.resetLevel();
+            this.canvas.writeTextToCanvas('M-toets: Geluid uit', 20, 460, 57, '#FFF', 'center');
+        }
+    }
+    hideVideo() {
+        let videlem = document.getElementById("video");
+        videlem.style.display = "none";
+        videlem.pause();
+        this.checkForMute();
+    }
     checkAnswer() {
         if (this.keyHandler.keyPressed == 'V') {
             this.videoScreen();
         }
+        if (this.keyHandler.keyPressed == 'H') {
+            this.storeHint();
+            this.canvas.Clear();
+            this.hintScreen();
+        }
         if (this.keyHandler.keyPressed == 'R') {
-            this.canvas.hideVideo();
+            this.hideVideo();
+            this.checkForMute();
+            this.resetLevel();
+            var canvas = document.getElementById("canvas");
+            canvas.classList.remove(`${this.country}_dark`);
+            canvas.classList.add(`${this.country}`);
+        }
+        if (this.keyHandler.keyPressed == 'M' && this.musicMuted == false) {
+            this.pauseBackgroundMusic();
+            this.keyHandler.resetKeys();
+            this.canvas.Clear();
+            this.canvas.writeTextToCanvas('M-toets: Geluid uit', 25, 460, 55, '#FFF', 'center');
+            this.resetLevel();
+        }
+        else if (this.keyHandler.keyPressed == 'M' && this.musicMuted == true) {
+            this.playBackgroundMusic();
+            this.keyHandler.resetKeys();
+            this.canvas.Clear();
+            this.canvas.writeTextToCanvas('M-toets: Geluid aan', 25, 460, 55, '#FFF', 'center');
             this.resetLevel();
         }
         if (this.goodAnswer == this.keyHandler.keyPressed) {
+            new Audio('./assets/audio/good.mp3').play();
             this.questionHandler.increaseQuestionCounter();
             this.questionHandler.setQuestionBooleans();
             this.keyHandler.resetKeys();
             this.resetLevel();
+            this.checkForMute();
         }
         if (this.keyHandler.keyPressed !== null) {
-            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'R') {
+            if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'R' && this.keyHandler.keyPressed !== 'M' && this.keyHandler.keyPressed !== 'H') {
                 clearInterval(this.answerInterval);
+                new Audio('./assets/audio/wrong.mp3').play();
                 this.canvas.Clear();
                 this.gameScreen();
                 this.writeLevelAssets();
@@ -390,6 +488,7 @@ class Game {
                     setTimeout(() => {
                         this.keyHandler.resetKeys();
                         this.levelScreen();
+                        this.checkForMute();
                         this.answerInterval = window.setInterval(() => this.checkAnswer(), 200 / 1);
                     }, 3000);
                 }
@@ -421,14 +520,15 @@ class Game {
     }
     levelScreen() {
         this.canvas.Clear();
-        this.gameScreen();
         this.writeLevelAssets();
         this.drawSouvenirs();
+        this.gameScreen();
         this.showQuestion();
         this.keyHandler.runKeyHandler();
         this.showAnswers();
+        this.canvas.writeNameToRectangle(170, 60, 350, 30);
+        this.canvas.writeCountryToRectangle(`Je bent in ${this.country}`, this.canvas.getWidth() - 250, 60, this.canvas.getWidth(), 30);
         this.life_handler.draw_lifes();
-        console.log(this.country);
     }
     playedOutScreen() {
         this.canvas.Clear();
@@ -436,6 +536,8 @@ class Game {
         this.writeLevelAssets();
         this.drawSouvenirs();
         this.canvas.writeImageFromFileToCanvas(`assets/images/${this.country}/souvenir3_h.png`, 530, 150, 150, 150, "QuesThree");
+        this.backgroundMusic.pause();
+        new Audio('./assets/audio/passed.mp3').play();
         this.canvas.writeTextToCanvas('Goed gedaan! Level uitgespeeld!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
         this.life_handler.draw_lifes();
     }
@@ -444,15 +546,29 @@ class Game {
         videlem.style.display = "initial";
     }
     videoScreen() {
+        this.backgroundMusic.pause();
         this.canvas.Clear();
         this.canvas.writeTextToCanvas('Bekijk de video voor meer informatie!', 70, this.canvas.getWidth() / 2, 100, '#FFF', 'center');
-        var videlem = document.getElementById("video");
-        var sourceMP4 = document.createElement("source");
-        sourceMP4.type = "video/mp4";
-        sourceMP4.src = this.url;
-        videlem.appendChild(sourceMP4);
-        videlem.id = "video";
+        if (document.getElementById("vsrc") == null) {
+            let videlem = document.getElementById("video");
+            let sourceMP4 = document.createElement("source");
+            sourceMP4.type = "video/mp4";
+            sourceMP4.src = this.url;
+            sourceMP4.id = "vsrc";
+            videlem.appendChild(sourceMP4);
+            videlem.id = "video";
+        }
         this.showVideo();
+        this.canvas.writeCloseButtonToCanvas();
+    }
+    hintScreen() {
+        var canvas = document.getElementById("canvas");
+        canvas.classList.remove(`${this.country}`);
+        canvas.classList.add(`${this.country}_dark`);
+        this.canvas.Clear();
+        let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
+        this.canvas.writeTextToCanvas(`${questionObject.hint}`, 70, this.canvas.getWidth() / 2, 350, '#FFF', 'center');
+        this.canvas.writeTextToCanvas(`Bekijk de hints om de vraag makkelijker te maken!`, 70, this.canvas.getWidth() / 2, 100, '#FFF', 'center');
         this.canvas.writeCloseButtonToCanvas();
     }
     video_source() {
@@ -576,11 +692,17 @@ class keyHandler {
         if (event.key == 'd') {
             this.keyPressed = 'D';
         }
-        if (event.key == 'v') {
-            this.keyPressed = 'V';
+        if (event.key == 'h') {
+            this.keyPressed = 'H';
         }
         if (event.key == 'r') {
             this.keyPressed = 'R';
+        }
+        if (event.key == 'v') {
+            this.keyPressed = 'V';
+        }
+        if (event.key == 'm') {
+            this.keyPressed = 'M';
         }
     }
     resetKeys() {
@@ -599,18 +721,21 @@ class questionHandler {
                     number: 0,
                     question: 'Hoe schrijf je Nederland in het Frans?',
                     answer: 'C',
+                    hint: 'Nederlandse vertaling: "De Lage Nederlanden"',
                     potentials: ['A: Hollandia', "B: l'Hollande", 'C: Les Pays-Bas', 'D: Les Nederlands']
                 },
                 {
                     number: 1,
                     question: 'Wat is de bekendste kaas van Frankrijk?',
                     answer: 'D',
+                    hint: 'Het is niet de meest verkochte kaas in Nederland',
                     potentials: ['A: Brie', "B: Beaufort", 'C: Roquefort', 'D: Camembert']
                 },
                 {
                     number: 2,
                     question: 'Wie was de bekendste Franse persoon?',
                     answer: 'A',
+                    hint: 'Er zijn snoepjes met dezelfde naam',
                     potentials: ['A: Napoleon', "B: Georges Pompidou", "C: Jeanne D'Arc", 'D: Lodewijk XIV']
                 }
             ];
@@ -620,18 +745,21 @@ class questionHandler {
                     number: 0,
                     question: 'Sinds wanneer bestaat België?',
                     answer: 'D',
+                    hint: 'Bijna 2 eeuwen geleden',
                     potentials: ['A: 1795', "B: 2000", 'C: 1908', 'D: 1830']
                 },
                 {
                     number: 1,
                     question: 'Hoelang heeft het Verenigd Koninkrijk der Nederlanden standgehouden?',
                     answer: 'B',
+                    hint: 'De som van de getallen 1 t/m 5',
                     potentials: ['A: 8 Jaar', "B: 15 Jaar", 'C: 17.5 Jaar', 'D: 55 Jaar']
                 },
                 {
                     number: 2,
                     question: 'Wat betekend "Seffus"?',
                     answer: 'C',
+                    hint: 'Binnen korte tijd',
                     potentials: ['A: Zeven', "B: Eventjes", "C: Straks", 'D: Gisteren']
                 }
             ];
@@ -641,18 +769,21 @@ class questionHandler {
                     number: 0,
                     question: 'Wat betekend "Man" in het Duits?',
                     answer: 'A',
+                    hint: 'Het is niet wat het lijkt, behalve de eerste letter',
                     potentials: ['A: Mens', 'B: Man', 'C: Vader', 'D: Vrachtwagen']
                 },
                 {
                     number: 1,
                     question: 'Hoeveel vorstendommen had Duitsland vroeger?',
                     answer: 'C',
+                    hint: 'Het juiste getal heeft 3 verschillende getallen',
                     potentials: ['A: Precies 100', 'B: Ongeveer 40', 'C: Ongeveer 130', 'D: Precies 12']
                 },
                 {
                     number: 2,
                     question: 'Wat wordt er bedoeld met "Schlager"?',
                     answer: 'B',
+                    hint: 'Het heeft iets met geluid te maken',
                     potentials: ['A: Slaan', 'B: Muziek', "C: Slager", 'D: Vleesindustrie']
                 }
             ];
@@ -662,18 +793,21 @@ class questionHandler {
                     number: 0,
                     question: 'Hoeveel mensen wonen er in Nederland?',
                     answer: 'C',
+                    hint: 'Het liedje "15 miljoen mensen" is een beetje achterhaald',
                     potentials: ['A: Ongeveer 10 miljoen', 'B: Ongeveer 16 miljoen', 'C: Ongeveer 17 miljoen', 'D: Ongeveer 20 miljoen']
                 },
                 {
                     number: 1,
                     question: 'Hoeveel procent is werkloos in Nederland?',
                     answer: 'D',
+                    hint: 'Het op één na hoogste getal van een dobbelsteen',
                     potentials: ['A: 1', 'B: 10', 'C: 50', 'D: 5']
                 },
                 {
                     number: 2,
                     question: 'Hoeveel procent is bejaard?',
                     answer: 'A',
+                    hint: 'De leeftijd wanneer je volwassen genoemd wordt',
                     potentials: ['A: Ongeveer 18', 'B: Ongeveer 8', 'C: Ongeveer 28', 'D: Ongeveer 5']
                 }
             ];
@@ -683,18 +817,21 @@ class questionHandler {
                     number: 0,
                     question: 'Wat is de naam van het Engelse koningshuis?',
                     answer: 'D',
+                    hint: 'Het heeft niet te maken met een paleis',
                     potentials: ['A: Saxe-Coburg', 'B: London', 'C: Buckingham Palace', 'D: Windsor']
                 },
                 {
                     number: 1,
                     question: 'Wat is een nette naam voor agent?',
                     answer: 'C',
+                    hint: 'Smeris is natuurlijk Nederlands',
                     potentials: ['A: Smeris', 'B: Pigs', 'C: Bobby', 'D: My Kok']
                 },
                 {
                     number: 2,
                     question: 'Wat heeft een Engelse agent niet?',
                     answer: 'B',
+                    hint: 'Het is behoorlijk gevaarlijk',
                     potentials: ['A: Wapenstok', 'B: Pistool', 'C: Portofoon', 'D: Handboeien']
                 }
             ];
@@ -704,18 +841,21 @@ class questionHandler {
                     number: 0,
                     question: 'Wie was de man die IJsland haar naam gaf?',
                     answer: 'C',
+                    hint: 'Zijn achternaam lijkt op broodbeleg',
                     potentials: ['A: Halldór Ásgrímsson', 'B: Hannes Hafstein', 'C: Hrafna-Flóki', 'D: Ólafur Ragnar Grímsson']
                 },
                 {
                     number: 1,
                     question: 'Wat is de hoofdstad van IJsland?',
                     answer: 'A',
+                    hint: 'Hoe noem je iemand met veel geld?',
                     potentials: ['A: Reykjavík', 'B: Keflavik', 'C: Húsavík', 'D: Akureyri']
                 },
                 {
                     number: 2,
-                    question: 'Wanneer werd IJsland onafhankelijk van Denemarken?',
+                    question: 'Wanneer werd IJsland onafhankelijk?',
                     answer: 'B',
+                    hint: 'Het was aan het einde van de Tweede Wereldoorlog',
                     potentials: ['A: 1872', 'B: 1944', 'C: 1968', 'D: 2000']
                 }
             ];

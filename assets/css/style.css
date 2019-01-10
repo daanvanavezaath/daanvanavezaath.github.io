@@ -7,13 +7,41 @@
 }
 
 #headerContainer { 
-	font-family: 'Walkway';
+	font-family: 'Walkway', sans-serif;
 	color: #FFF;
 	letter-spacing: 2px;
+	position: absolute;
+    display: block;
+    width: 100%;
+    background-color: #6597CF;
+    z-index: 1;
 }
 
 #europe_map {
 	background-color: #6597cf !important;
+	top: 0;
+}
+
+.main_screen {
+	margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+#clear_cookies {
+	font-family: "Walkway", sans-serif;
+	color: #FFF;
+	letter-spacing: 2px;
+	position: absolute;
+    top: -5px;
+    right: 10px;
+    cursor: default;
+    padding: 15px;
+    z-index: 5;
+}
+
+#clear_cookies:hover {
+    background-color: #5078A5;
 }
 
 .democlass {
@@ -218,6 +246,36 @@ img {
 
 .IJsland {
 	background-image: url(../images/IJsland/bg.png);
+	background-size: 56%;
+}
+
+.Frankrijk_dark {
+	background-image: url(../images/Frankrijk/bg_dark.png);
+	background-size: 50%;
+}
+
+.Belgie_dark {
+	background-image: url(../images/Belgie/bg_dark.png);
+	background-size: 56%;
+}
+
+.Duitsland_dark {
+	background-image: url(../images/Duitsland/bg_dark.png);
+	background-size: 56%;
+}
+
+.Nederland_dark {
+	background-image: url(../images/Nederland/bg_dark.jpg);
+	background-size: 56%;
+}
+
+.Engeland_dark {
+	background-image: url(../images/Engeland/bg_dark.jpg);
+	background-size: 56%;
+}
+
+.IJsland_dark {
+	background-image: url(../images/IJsland/bg_dark.png);
 	background-size: 56%;
 }
 
