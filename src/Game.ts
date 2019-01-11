@@ -261,26 +261,14 @@ class Game {
                 this.life_handler.draw_lifes();
                 // Writes text to the canvas
                 if (this.life_handler.return_life() == 0) {
-                    // No lifes left
                     this.canvas.writeTextToCanvas("Je hebt geen levens meer! :(", 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                    console.log("I'm here!");
                     // Pauses background music
                     this.musicMuted = true;
                     // Check music options
                     this.checkForMute();
-                    // Plays fail mp3
-                    new Audio('./assets/audio/fail.mp3').play()
                 } else {
-                    // Shows wrong answer text
                     this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
-                }
-
-                // After 3 secs, load level screen again and restart the checkAnswer-interval. Check lives first
-                if (this.life_handler.return_life() == 0) {
-                    // Replace to index.html after 3 secs
-                    setTimeout(() => {
-                        window.location.replace('index.html');
-                    }, 3000);
-                } else {
                     // Rerun level screen after 3 seconds
                     setTimeout(() => {
                         this.keyHandler.resetKeys();

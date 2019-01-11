@@ -475,19 +475,12 @@ class Game {
                 this.life_handler.draw_lifes();
                 if (this.life_handler.return_life() == 0) {
                     this.canvas.writeTextToCanvas("Je hebt geen levens meer! :(", 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                    console.log("I'm here!");
                     this.musicMuted = true;
                     this.checkForMute();
-                    new Audio('./assets/audio/fail.mp3').play();
                 }
                 else {
                     this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
-                }
-                if (this.life_handler.return_life() == 0) {
-                    setTimeout(() => {
-                        window.location.replace('index.html');
-                    }, 3000);
-                }
-                else {
                     setTimeout(() => {
                         this.keyHandler.resetKeys();
                         this.levelScreen();
@@ -596,6 +589,9 @@ class LifeHandler {
         this.transparent_life = "./assets/images/redcrosspng_tr.png";
         this.opaque_life = "./assets/images/redcrosspng.png";
     }
+    return_life() {
+        return this.lifes;
+    }
     subtract_life() {
         if (this.lifes > 0) {
             this.lifes -= 1;
@@ -604,7 +600,7 @@ class LifeHandler {
         if (this.lifes == 0) {
             setTimeout(() => {
                 window.location.replace('index.html');
-            }, 2000);
+            }, 3000);
         }
     }
     draw_lifes() {
@@ -628,9 +624,6 @@ class LifeHandler {
             this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 450, 600, 100, 100, "one_transp");
             this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 200, 600, 100, 100, "one_transp");
         }
-    }
-    return_life() {
-        return this.lifes;
     }
 }
 class countryController {

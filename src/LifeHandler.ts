@@ -8,6 +8,11 @@ class LifeHandler {
     public constructor() {
     }
 
+    // Returns lifes left
+    public return_life() {
+        return this.lifes;
+    }
+
     // If there are any lives left, subtract one from the amount of lives
     public subtract_life() {
         if (this.lifes > 0) {
@@ -15,11 +20,11 @@ class LifeHandler {
             console.log(this.lifes);
         }
 
-        // If there are no lives left, move to index after 2 secs
+        // If there are no lives left, move to index after 3 secs
         if (this.lifes == 0) {
             setTimeout(() => {
                 window.location.replace('index.html');
-            }, 2000);
+            }, 3000);
         }
     }
 
@@ -42,10 +47,5 @@ class LifeHandler {
             this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 450, 600, 100, 100, "one_transp");
             this.canvas.writeImageFromFileToCanvas(this.opaque_life, this.canvas.getWidth() - 200, 600, 100, 100, "one_transp");
         }
-    }
-
-    // Returns the lives
-    public return_life() {
-        return this.lifes;
     }
 }
