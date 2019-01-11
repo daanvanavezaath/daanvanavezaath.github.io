@@ -32,20 +32,25 @@ class Game {
         this.backgroundMusic = new Audio(this.backgroundMusicUrl);
         // Sets musicMuted to false
         this.musicMuted = false;
+        // Checks and run sound options
         this.checkForMute();
     }
 
+    // Plays background music
     private playBackgroundMusic() {
         this.backgroundMusic.play();
+        // Set music bool
         this.musicMuted = false;
         this.canvas.writeImageFromFileToCanvas('./assets/images/soundOn.png', 350, 30, 40, 40, 'soundOnButton')
     }
 
+    // Pauses background music
     private pauseBackgroundMusic() {
         this.backgroundMusic.pause();
+        // Set music bool
         this.musicMuted = true;
         this.canvas.writeImageFromFileToCanvas('./assets/images/mute.png', 350, 30, 40, 40, 'muteButton')
-        this.canvas.writeTextToCanvas('M-toets: Geluid aan', 15, 460, 55, '#FFF', 'center');
+        this.canvas.writeTextToCanvas('M-toets: Muziek aan', 15, 460, 55, '#FFF', 'center');
     }
 
     // Draws the earned souvenirs
@@ -131,39 +136,48 @@ class Game {
 
     }
 
+    // Checks if sound is muted or not
     private checkForMute() {
+
+        // If sound is muted, run this
         if (this.musicMuted == true) {
             this.pauseBackgroundMusic();
             this.keyHandler.resetKeys();
             this.canvas.Clear();
             this.resetLevel();
-            this.canvas.writeTextToCanvas('M-toets: Geluid aan', 20, 460, 57, '#FFF', 'center');
+            this.canvas.writeTextToCanvas('M-toets: Muziek aan', 20, 460, 57, '#FFF', 'center');
         }
-
+        // If sound is not muted, run this
         else if (this.musicMuted == false) {
             this.playBackgroundMusic();
             this.keyHandler.resetKeys();
             this.canvas.Clear();
             this.resetLevel();
-            this.canvas.writeTextToCanvas('M-toets: Geluid uit', 20, 460, 57, '#FFF', 'center');
+            this.canvas.writeTextToCanvas('M-toets: Muziek uit', 20, 460, 57, '#FFF', 'center');
         }
     }
 
+    // Hides the video
     public hideVideo() {
         //@ts-ignore
         let videlem: HTMLVideoElement = document.getElementById("video")
         videlem.style.display = "none";
+        // Pauses the video
         videlem.pause();
+        // Check and run sound options
         this.checkForMute();
     }
 
+    // Checks for key inputs for screens and questions
     private checkAnswer() {
+
         // If 'V' is pressed, enter Video screen
         if (this.keyHandler.keyPressed == 'V') {
             // Render video screen
             this.videoScreen();
         }
 
+        // If H is pressed, enter Hint screen
         if (this.keyHandler.keyPressed == 'H') {
             // Get stored hint
             this.storeHint();
@@ -173,31 +187,37 @@ class Game {
             this.hintScreen();
         }
 
-
+        // If R is pressed when player is on Hint or Video screen, close screen
         if (this.keyHandler.keyPressed == 'R') {
+            // Hides the video
             this.hideVideo();
+            // Check and run sound options
             this.checkForMute();
+            // Resets the level
             this.resetLevel();
+            // Gets canvas element from DOM
             var canvas = document.getElementById("canvas");
-            // Adds country to class
+            // Removes dark background class to canvas
             canvas.classList.remove(`${this.country}_dark`);
+            // Sets original background to the canvas
             canvas.classList.add(`${this.country}`);
         }
 
-
+        // If Keypress is M and Music is nog muted, mute the music
         if (this.keyHandler.keyPressed == 'M' && this.musicMuted == false) {
             this.pauseBackgroundMusic();
             this.keyHandler.resetKeys();
             this.canvas.Clear();
-            this.canvas.writeTextToCanvas('M-toets: Geluid uit', 25, 460, 55, '#FFF', 'center');
+            this.canvas.writeTextToCanvas('M-toets: Muziek uit', 25, 460, 55, '#FFF', 'center');
             this.resetLevel();
         }
 
+        // If Keypress is M and Music is muted, play music
         else if (this.keyHandler.keyPressed == 'M' && this.musicMuted == true) {
             this.playBackgroundMusic();
             this.keyHandler.resetKeys();
             this.canvas.Clear();
-            this.canvas.writeTextToCanvas('M-toets: Geluid aan', 25, 460, 55, '#FFF', 'center');
+            this.canvas.writeTextToCanvas('M-toets: Muziek aan', 25, 460, 55, '#FFF', 'center');
             this.resetLevel();
         }
 
@@ -217,6 +237,7 @@ class Game {
             this.checkForMute();
         }
 
+        // Checks for keypresses
         if (this.keyHandler.keyPressed !== null) {
             // If answers is not good, or keypress is not an answers letter, do this
             if (this.goodAnswer !== this.keyHandler.keyPressed && this.keyHandler.keyPressed !== 'V' && this.keyHandler.keyPressed !== 'R' && this.keyHandler.keyPressed !== 'M' && this.keyHandler.keyPressed !== 'H') {
@@ -240,17 +261,27 @@ class Game {
                 this.life_handler.draw_lifes();
                 // Writes text to the canvas
                 if (this.life_handler.return_life() == 0) {
+                    // No lifes left
                     this.canvas.writeTextToCanvas("Je hebt geen levens meer! :(", 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                    // Pauses background music
+                    this.musicMuted = true;
+                    // Check music options
+                    this.checkForMute();
+                    // Plays fail mp3
+                    new Audio('./assets/audio/fail.mp3').play()
                 } else {
+                    // Shows wrong answer text
                     this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
                 }
 
-                // After 3 secs, load level screen again and restart the checkAnswer-interval. Check lifes first
+                // After 3 secs, load level screen again and restart the checkAnswer-interval. Check lives first
                 if (this.life_handler.return_life() == 0) {
+                    // Replace to index.html after 3 secs
                     setTimeout(() => {
                         window.location.replace('index.html');
                     }, 3000);
                 } else {
+                    // Rerun level screen after 3 seconds
                     setTimeout(() => {
                         this.keyHandler.resetKeys();
                         this.levelScreen();
@@ -290,6 +321,7 @@ class Game {
                 }
             }
 
+            // Replace to index.html after 2 secs
             setTimeout(() => {
                 window.location.replace('index.html');
             }, 2000);
@@ -315,7 +347,7 @@ class Game {
         // Writes name and country to top bar
         this.canvas.writeNameToRectangle(170, 60, 350, 30);
         this.canvas.writeCountryToRectangle(`Je bent in ${this.country}`, this.canvas.getWidth() - 250, 60, this.canvas.getWidth(), 30);
-        // draw lifes
+        // Draw lives
         this.life_handler.draw_lifes();
     }
 
@@ -337,13 +369,15 @@ class Game {
         new Audio('./assets/audio/passed.mp3').play()
         // Shows level played out text
         this.canvas.writeTextToCanvas('Goed gedaan! Level uitgespeeld!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
-        // show lifes
+        // Show lives
         this.life_handler.draw_lifes();
     }
 
     // Function to show the video
     public showVideo() {
+        // Get Video element from DOM
         var videlem = document.getElementById("video");
+        // Set CSS display property to initial
         videlem.style.display = "initial";
     }
 
@@ -386,10 +420,11 @@ class Game {
         // Writes info text
         let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
         this.canvas.writeTextToCanvas(`${questionObject.hint}`, 70, this.canvas.getWidth() / 2, 350, '#FFF', 'center');
-        this.canvas.writeTextToCanvas(`Bekijk de hints om de vraag makkelijker te maken!`, 70, this.canvas.getWidth() / 2, 100, '#FFF', 'center');
+        this.canvas.writeTextToCanvas(`En de hint voor deze vraag is...`, 70, this.canvas.getWidth() / 2, 100, '#FFF', 'center');
         this.canvas.writeCloseButtonToCanvas();
     }
 
+    // Retruns video URL
     public video_source() {
         return this.url;
     }
@@ -403,11 +438,12 @@ function init(): void {
     if (window.location.pathname.match(/\/index.html/)) {
         // do nothing
     } else {
+        // Build new game object
         const ikReis = new Game();
-
+        // Gets Video element from DOM
         const videlem = document.getElementById("video");
+        // Sets correct video source to Video element
         videlem.setAttribute("src", ikReis.video_source());
-
         setTimeout(function () { ikReis }, 1000);
     }
 }

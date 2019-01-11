@@ -12,7 +12,7 @@ class questionHandler {
         // Counter begins at 0
         this.questionCounter = 0;
 
-
+        // If country is 'Frankrijk', do this
         if (this.countryController.getCountry() == 'Frankrijk') {
             // Array with questions
             this.questions = [{
@@ -39,6 +39,7 @@ class questionHandler {
             ];
         }
 
+        // If country is 'Belgie', do this
         if (this.countryController.getCountry() == 'Belgie') {
             // Array with questions
             this.questions = [{
@@ -50,7 +51,7 @@ class questionHandler {
             },
             {
                 number: 1,
-                question: 'Hoelang heeft het Verenigd Koninkrijk der Nederlanden standgehouden?',
+                question: 'Hoelang bestond het V.K. der Nederlanden?',
                 answer: 'B',
                 hint: 'De som van de getallen 1 t/m 5',
                 potentials: ['A: 8 Jaar', "B: 15 Jaar", 'C: 17.5 Jaar', 'D: 55 Jaar']
@@ -65,6 +66,7 @@ class questionHandler {
             ];
         }
 
+        // If country is 'Duitsland', do this
         if (this.countryController.getCountry() == 'Duitsland') {
             // Array with questions
             this.questions = [{
@@ -91,6 +93,7 @@ class questionHandler {
             ];
         }
 
+        // If country is 'Nederland', do this
         if (this.countryController.getCountry() == 'Nederland') {
             // Array with questions
             this.questions = [{
@@ -117,6 +120,7 @@ class questionHandler {
             ];
         }
 
+        // If country is 'Engeland', do this
         if (this.countryController.getCountry() == 'Engeland') {
             // Array with questions
             this.questions = [{
@@ -143,6 +147,7 @@ class questionHandler {
             ];
         }
 
+        // If country is 'IJsland', do this
         if (this.countryController.getCountry() == 'IJsland') {
             this.questions = [{
                 number: 0,

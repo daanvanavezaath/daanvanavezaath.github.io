@@ -68,7 +68,7 @@ class ClearCookies {
     clear_cookies() {
         this.cookie_id.addEventListener("click", function () {
             if (confirm("Weet je zeker dat je opnieuw wilt beginnen?")) {
-                cookie.set("passed", " ", { expires: 366 });
+                cookie.set("passed", "", { expires: 366 });
                 cookie.remove("name");
                 setTimeout(() => location.reload(), 100);
             }
@@ -284,7 +284,7 @@ class EuropeMap {
     color_country() {
         let countries_passed = cookie.get("passed");
         if (countries_passed == undefined || countries_passed == null) {
-            cookie.set("passed", ",", { expires: 366 });
+            cookie.set("passed", "", { expires: 366 });
             countries_passed = cookie.get("passed").split(",");
         }
         else {
@@ -347,7 +347,7 @@ class Game {
         this.backgroundMusic.pause();
         this.musicMuted = true;
         this.canvas.writeImageFromFileToCanvas('./assets/images/mute.png', 350, 30, 40, 40, 'muteButton');
-        this.canvas.writeTextToCanvas('M-toets: Geluid aan', 15, 460, 55, '#FFF', 'center');
+        this.canvas.writeTextToCanvas('M-toets: Muziek aan', 15, 460, 55, '#FFF', 'center');
     }
     drawSouvenirs() {
         if (this.questionHandler.question0 != true) {
@@ -407,14 +407,14 @@ class Game {
             this.keyHandler.resetKeys();
             this.canvas.Clear();
             this.resetLevel();
-            this.canvas.writeTextToCanvas('M-toets: Geluid aan', 20, 460, 57, '#FFF', 'center');
+            this.canvas.writeTextToCanvas('M-toets: Muziek aan', 20, 460, 57, '#FFF', 'center');
         }
         else if (this.musicMuted == false) {
             this.playBackgroundMusic();
             this.keyHandler.resetKeys();
             this.canvas.Clear();
             this.resetLevel();
-            this.canvas.writeTextToCanvas('M-toets: Geluid uit', 20, 460, 57, '#FFF', 'center');
+            this.canvas.writeTextToCanvas('M-toets: Muziek uit', 20, 460, 57, '#FFF', 'center');
         }
     }
     hideVideo() {
@@ -444,14 +444,14 @@ class Game {
             this.pauseBackgroundMusic();
             this.keyHandler.resetKeys();
             this.canvas.Clear();
-            this.canvas.writeTextToCanvas('M-toets: Geluid uit', 25, 460, 55, '#FFF', 'center');
+            this.canvas.writeTextToCanvas('M-toets: Muziek uit', 25, 460, 55, '#FFF', 'center');
             this.resetLevel();
         }
         else if (this.keyHandler.keyPressed == 'M' && this.musicMuted == true) {
             this.playBackgroundMusic();
             this.keyHandler.resetKeys();
             this.canvas.Clear();
-            this.canvas.writeTextToCanvas('M-toets: Geluid aan', 25, 460, 55, '#FFF', 'center');
+            this.canvas.writeTextToCanvas('M-toets: Muziek aan', 25, 460, 55, '#FFF', 'center');
             this.resetLevel();
         }
         if (this.goodAnswer == this.keyHandler.keyPressed) {
@@ -475,6 +475,9 @@ class Game {
                 this.life_handler.draw_lifes();
                 if (this.life_handler.return_life() == 0) {
                     this.canvas.writeTextToCanvas("Je hebt geen levens meer! :(", 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
+                    this.musicMuted = true;
+                    this.checkForMute();
+                    new Audio('./assets/audio/fail.mp3').play();
                 }
                 else {
                     this.canvas.writeTextToCanvas('Niet goed, probeer opnieuw!', 30, this.canvas.getWidth() - 400, 200, '#FFF', 'center');
@@ -568,7 +571,7 @@ class Game {
         this.canvas.Clear();
         let questionObject = this.questionHandler.questions[this.questionHandler.questionCounter];
         this.canvas.writeTextToCanvas(`${questionObject.hint}`, 70, this.canvas.getWidth() / 2, 350, '#FFF', 'center');
-        this.canvas.writeTextToCanvas(`Bekijk de hints om de vraag makkelijker te maken!`, 70, this.canvas.getWidth() / 2, 100, '#FFF', 'center');
+        this.canvas.writeTextToCanvas(`En de hint voor deze vraag is...`, 70, this.canvas.getWidth() / 2, 100, '#FFF', 'center');
         this.canvas.writeCloseButtonToCanvas();
     }
     video_source() {
@@ -750,7 +753,7 @@ class questionHandler {
                 },
                 {
                     number: 1,
-                    question: 'Hoelang heeft het Verenigd Koninkrijk der Nederlanden standgehouden?',
+                    question: 'Hoelang bestond het V.K. der Nederlanden?',
                     answer: 'B',
                     hint: 'De som van de getallen 1 t/m 5',
                     potentials: ['A: 8 Jaar', "B: 15 Jaar", 'C: 17.5 Jaar', 'D: 55 Jaar']

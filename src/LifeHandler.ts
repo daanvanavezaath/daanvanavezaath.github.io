@@ -8,12 +8,14 @@ class LifeHandler {
     public constructor() {
     }
 
+    // If there are any lives left, subtract one from the amount of lives
     public subtract_life() {
         if (this.lifes > 0) {
             this.lifes -= 1;
             console.log(this.lifes);
         }
 
+        // If there are no lives left, move to index after 2 secs
         if (this.lifes == 0) {
             setTimeout(() => {
                 window.location.replace('index.html');
@@ -21,6 +23,7 @@ class LifeHandler {
         }
     }
 
+    // Draw the life images to canvas
     public draw_lifes() {
         if (this.lifes == 3) {
             this.canvas.writeImageFromFileToCanvas(this.transparent_life, this.canvas.getWidth() - 700, 600, 100, 100, "one_transp");
@@ -41,6 +44,7 @@ class LifeHandler {
         }
     }
 
+    // Returns the lives
     public return_life() {
         return this.lifes;
     }

@@ -3,7 +3,7 @@ class Canvas {
     private readonly canvas: HTMLCanvasElement;
     private readonly ctx: CanvasRenderingContext2D;
 
-    constructor(canvas:HTMLCanvasElement) {
+    constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = window.innerWidth;
@@ -66,13 +66,12 @@ class Canvas {
         id: string) {
 
         let image = new Image();
-        // add the listener so the waiting will not affect the change
+        // Add the listener so the waiting will not affect the change
         image.addEventListener('load', () => {
-            //this.ctx.clip();
             this.ctx.drawImage(image, aXpos, aYpos, width, heigth);
         });
 
-        // load the source in the image.
+        // Load the source of the image.
         image.src = aSrc;
     }
 
@@ -90,7 +89,7 @@ class Canvas {
         //@ts-ignore
         this.ctx.fillText(`ikReis | ${cookie.get("name")}`, aXpos, aYpos, maxWidth);
     }
-    
+
 
     // Writes country into the rectangle 
     public writeCountryToRectangle(text: string, aXpos: number, aYpos: number, maxWidth: number, fontSize: number) {
@@ -99,7 +98,9 @@ class Canvas {
         this.ctx.fillText(text, aXpos, aYpos, maxWidth);
     }
 
+    // Writes close text to the canvas
     public writeCloseButtonToCanvas() {
         this.writeTextToCanvas("Druk op 'R' om terug naar de vragen te gaan...", 30, this.getWidth() / 2, (this.getHeight() / 2 + 245), "#FFF");
     }
 }
+
